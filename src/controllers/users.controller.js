@@ -1,4 +1,4 @@
-import CreateUserService from "../services/users.service.js"
+import UsersService from "../services/users.service.js"
 
 
 const CreateUser = async (req, res) => {
@@ -10,7 +10,7 @@ const CreateUser = async (req, res) => {
             return res.status(400).send({ message: "Preencha todos os campos!" })
         }
 
-        const user = await CreateUser.CreateUserService(req.body)
+        const user = await UsersService.Create(req.body)
 
         if (!user) {
             return res.status(400).send({ message: "Erro ao criar usuário!" })
@@ -31,9 +31,24 @@ const CreateUser = async (req, res) => {
 
 
     }
-    catch (error) {
-        return res.status(500).send({ message: error })
+    catch (err) {
+        return res.status(500).send({ message: err })
     }
 }
 
-export default {CreateUser}
+const ReadUsers = async (req, res) => {
+    try {
+        const Users = await UsersService.ReadAll()
+
+        if (!Users) {
+            return res.status(400).send({message: "Usuários não encontrados."})
+        }
+
+        res.status(200).send(Users)
+    }
+    catch (err) {
+        return res.status(500).send({message: err})
+    }
+}
+
+export default {CreateUser, ReadUsers}

@@ -25,7 +25,7 @@ const UserSchema = new mongoose.Schema(
         senha: {
             type: String,
             required: true,
-            select: true
+            select: false
         },
         avatar: {
             type: String,
@@ -44,6 +44,6 @@ UserSchema.pre("save", async function (next) {
 })
 /* hash() criptografa a senha; 10 = quant. de salt/rodadas*/
 
-const Users = mongoose.model("Users", UserSchema)
+const Users_BrainRage = mongoose.model("Users_BrainRage", UserSchema)
 
-export default Users
+export default Users_BrainRage

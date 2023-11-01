@@ -1,5 +1,7 @@
-import Users from "../models/users.js";
+import Users_BrainRage from "../models/users.js";
 
-const CreateUserService = (body) => Users.create(body)
+const Create = (body) => Users_BrainRage.create(body)
 
-export default {CreateUserService}
+const ReadAll = () => Users_BrainRage.find().sort({_id: -1})
+
+export default {Create, ReadAll}
