@@ -1,7 +1,12 @@
 import Users_BrainRage from "../models/users.js";
 
-const Create = (body) => Users_BrainRage.create(body)
+const createUser = (body) => Users_BrainRage.create(body)
 
-const ReadAll = () => Users_BrainRage.find().sort({_id: -1})
+const findAllUsers = () => Users_BrainRage.find().sort({_id: -1})
 
-export default {Create, ReadAll}
+const findUserById = (id) => Users_BrainRage.findById(id)
+
+const updateUser = (id, nome, sobrenome, email, username, senha, avatar) => Users_BrainRage.findOneAndUpdate({_id: id}, {nome, sobrenome, email, username, senha, avatar})
+
+
+export default {createUser, findAllUsers, findUserById, updateUser}

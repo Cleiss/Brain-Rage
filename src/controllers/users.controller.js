@@ -1,7 +1,7 @@
-import UsersService from "../services/users.service.js"
+import usersService from "../services/users.service.js"
 
 
-const CreateUser = async (req, res) => {
+const createUser = async (req, res) => {
     try {
         const { nome, sobrenome, email, username, senha, avatar } = req.body
 
@@ -10,13 +10,13 @@ const CreateUser = async (req, res) => {
             return res.status(400).send({ message: "Preencha todos os campos!" })
         }
 
-        const user = await UsersService.Create(req.body)
+        const user = await usersService.createUser(req.body)
 
         if (!user) {
             return res.status(400).send({ message: "Erro ao criar usuário!" })
         }
 
-        return res.status(200).send({
+        return res.status(201).send({
 
             user: {
                 id: user._id,
@@ -32,23 +32,69 @@ const CreateUser = async (req, res) => {
 
     }
     catch (err) {
-        return res.status(500).send({ message: err })
+        return res.status(500).send({ message: err.message })
     }
 }
 
-const ReadUsers = async (req, res) => {
+const findAllUsers = async (req, res) => {
     try {
-        const Users = await UsersService.ReadAll()
+        const Users = await usersService.findAllUsers()
 
         if (!Users) {
-            return res.status(400).send({message: "Usuários não encontrados."})
+            return res.status(400).send({ message: "Usuários não encontrados." })
         }
 
         res.status(200).send(Users)
     }
     catch (err) {
-        return res.status(500).send({message: err})
+        return res.status(500).send({ message: err.message })
     }
 }
 
-export default {CreateUser, ReadUsers}
+const findUserById = async (req, res) => {
+    try {
+        const user = req.user
+
+        res.status(200).send({
+            user//: {
+                //username: user.username,
+                //avatar: user.avatar
+            //}
+        })
+
+    }
+    catch (err) {
+        return res.status(500).send({ message: err.message })
+    }
+}
+
+const updateUser = async (req, res) => {
+    try {
+        const { nome, sobrenome, email, username, senha, avatar } = req.body
+
+        if (!nome && !sobrenome && !email && !username && !senha && !avatar) {
+
+            res.status(400).send({message: "Preencha pelo menos um campo."})
+        }
+
+        const id = req.id
+        const user = req.user
+
+        await usersService.updateUser(
+            id,
+            nome, 
+            sobrenome, 
+            email, 
+            username, 
+            senha, 
+            avatar
+        )
+
+        return res.status(201).send({message: "Dados de usuário atualizados."})
+    }
+    catch (err) {
+        return res.status(500).send({message: err.message})
+    }
+}
+
+export default { createUser, findAllUsers, findUserById, updateUser }
