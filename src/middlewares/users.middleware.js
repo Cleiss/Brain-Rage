@@ -1,20 +1,24 @@
 import mongoose from "mongoose";
 import jwt from "jsonwebtoken"
 import usersService from "../services/users.service.js"
+import dotenv from "dotenv"
 
+dotenv.config()
+
+/*validId vai verificar se o id é um id válido do BD*/
 const validId = (req, res, next) => {
     try {
         const id = req.params.id
 
         if (!mongoose.Types.ObjectId.isValid(id)) {
 
-            return res.status(400).send({message: "Id de usuário inválido."})
+            return res.status(400).send({ message: "Id de usuário inválido." })
         }
 
         next()
     }
     catch (err) {
-        return res.status(500).send({message: err.message})
+        return res.status(500).send({ message: err.message })
     }
 
 
@@ -29,7 +33,7 @@ const validUser = async (req, res, next) => {
 
         if (!user) {
 
-            return res.status(400).send({message: "Usuário não encontrado."})
+            return res.status(400).send({ message: "Usuário não encontrado." })
         }
 
         req.id = id
@@ -39,9 +43,63 @@ const validUser = async (req, res, next) => {
     }
     catch (err) {
 
-        return res.status(500).send({message: err.message})
+        return res.status(500).send({ message: err.message })
     }
 }
 
+const authMidd = (req, res, next) => {
+    try {
+        const { authorization } = req.headers
+        const {id} = req.params
 
-export {validId, validUser}
+        if (!authorization) {
+            return res.status(401) //verifica se authorization contém um valor
+        } 
+
+        const authHeader = authorization.split(" ")
+
+        if (authHeader.length !== 2) {
+            return res.status(401) //verifica se o array authHeader possui 2 elementos
+        } 
+
+        const [schema, token] = authHeader //nomeia os elementos do array authHeader
+
+        if (schema !== "Bearer") {
+            return res.status(401) //verifica se o valor do elemento schema é "Bearer"
+        } 
+
+        jwt.verify(token, process.env.SECRETJWT, async (erro, decoded) => { //verifica o token e decodifica
+            if (erro) {
+                return res.status(401).send({ message: "Token inválido." })
+            } 
+
+            const user = await usersService.findUserById(decoded.id) //busca o token decodificado/id no banco de dados
+        
+            if (!user || !user.id) {
+                return res.status(401).send({ message: 'Token inválido' }) //verifica se há valor em "user" ou "user.id"
+            }
+
+            /*console.log(user.id)
+            console.log(id)*/
+
+            if ( id !== user.id) {
+                return res.status(401).send({ message: 'Token inválido' }) //verifica se o "id" enviado e o "id" de quem está logado são os mesmos
+            }
+
+            req.userId = user.id
+            
+            next()
+        
+        })
+
+    }
+    catch (err) {
+
+        return res.status(500).send({ message: err.message })
+    }
+
+
+}
+
+
+export default { validId, validUser, authMidd }
