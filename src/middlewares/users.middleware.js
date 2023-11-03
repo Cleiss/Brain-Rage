@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import jwt from "jsonwebtoken"
 import usersService from "../services/users.service.js"
 
 const validId = (req, res, next) => {

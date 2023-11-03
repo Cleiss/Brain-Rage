@@ -1,7 +1,8 @@
-import express from 'express'
-import connectDB from './src/database/database.js'
-import dotenv from 'dotenv'
-import userRouter from './src/routes/users.route.js'
+import express from "express"
+import connectDB from "./src/database/database.js"
+import dotenv from "dotenv"
+import userRouter from "./src/routes/users.route.js"
+import authRouter from "./src/routes/auth.route.js"
 
 const app = express()
 const port = process.env.PORT || 5000
@@ -11,7 +12,8 @@ dotenv.config() /*dotenv está aqui pq a função que executa o banco de dados e
 connectDB()
 
 app.use(express.json())
-app.use('/users', userRouter)
+app.use("/users", userRouter)
+app.use("/auth", authRouter)
 
 app.listen(port, () => {
     console.log("Servidor aberto, aguardando resposta do Banco de Dados...")
