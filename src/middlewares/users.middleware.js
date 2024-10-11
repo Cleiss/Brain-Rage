@@ -68,29 +68,29 @@ const authMidd = (req, res, next) => {
             return res.status(401) //verifica se o valor do elemento schema é "Bearer"
         } 
 
-        jwt.verify(token, process.env.SECRETJWT, async (erro, decoded) => { //verifica o token e decodifica
+        jwt.verify(token, process.env.SECRET_JWT, async (erro, decoded) => { //verifica o token e decodifica
             if (erro) {
-                return res.status(401).send({ message: "Token inválido." })
+                return res.status(401).send({ message: "Token inválido 1." })
             } 
 
             const user = await usersService.findUserById(decoded.id) //busca o token decodificado/id no banco de dados
         
             if (!user || !user.id) {
-                return res.status(401).send({ message: 'Token inválido' }) //verifica se há valor em "user" ou "user.id"
+                return res.status(401).send({ message: 'Token inválido 2.' }) //verifica se há valor em "user" ou "user.id"
             }
 
             /*console.log(user.id)
             console.log(id)*/
 
             if ( id !== user.id) {
-                return res.status(401).send({ message: 'Token inválido' }) //verifica se o "id" enviado e o "id" de quem está logado são os mesmos
+                return res.status(401).send({ message: 'Token inválido 3.' }) //verifica se o "id" enviado e o "id" de quem está logado são os mesmos
             }
 
             req.userId = user.id
-            
-            next()
         
         })
+
+        next()
 
     }
     catch (err) {
