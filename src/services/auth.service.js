@@ -5,7 +5,7 @@ const loginService = (email) =>
     Users_BrainRage.findOne({email: email}).select("+senha")
 
 
-const generateToken = (id) => jwt.sign({id: id}, process.env.SECRETJWT, {expiresIn: 86400})
+const generateToken = (id) => jwt.sign({id: id}, process.env.SECRET_JWT, {expiresIn: 86400})
 
 /* const generateToken = () => jwt.sign({payload}, "hash MD5", options) */
 /* https://www.md5hashgenerator.com/ */
