@@ -53,13 +53,13 @@ const findAllUsers = async (req, res) => {
 
 const findUserById = async (req, res) => {
     try {
-        const user = req.user
+
+        const userrr = req.user
+
+        console.log(userrr)
 
         res.status(200).send({
-            user//: {
-                //username: user.username,
-                //avatar: user.avatar
-            //}
+            userrr
         })
 
     }

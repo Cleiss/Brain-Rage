@@ -26,10 +26,6 @@ const UserSchema = new mongoose.Schema(
             type: String,
             required: true,
             select: false
-        },
-        avatar: {
-            type: String,
-            required: true
         }
     } /*required é a verificação dos dados no bd*/
 )
