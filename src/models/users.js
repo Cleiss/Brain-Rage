@@ -27,16 +27,10 @@ const UserSchema = new mongoose.Schema(
             required: true,
             select: false
         },
-        moedas: {
-            type: String
-        },
-        pontsem: {
-            type: String
-        },
-        pontmen: {
-            type: String
+        pix: {
+            type: String,
+            required: true
         }
-
     } /*required é a verificação dos dados no bd*/
 )
 
