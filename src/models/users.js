@@ -30,6 +30,15 @@ const UserSchema = new mongoose.Schema(
         pix: {
             type: String,
             required: true
+        },
+        moedas: {
+            type: String
+        },
+        pontsem: {
+            type: String
+        },
+        pontmen: {
+            type: String
         }
     } /*required é a verificação dos dados no bd*/
 )
