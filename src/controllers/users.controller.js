@@ -3,9 +3,9 @@ import usersService from "../services/users.service.js"
 
 const createUser = async (req, res) => {
     try {
-        const { nome, sobrenome, email, username, senha, avatar } = req.body
+        const { nome, sobrenome, email, username, senha} = req.body
 
-        if (!nome || !sobrenome || !email || !username || !senha || !avatar) {
+        if (!nome || !sobrenome || !email || !username || !senha) {
 
             return res.status(400).send({ message: "Preencha todos os campos!" })
         }
@@ -23,8 +23,7 @@ const createUser = async (req, res) => {
                 nome,
                 sobrenome,
                 email,
-                username,
-                avatar
+                username
             },
             message: "Um novo usuário foi criado!"
         })
@@ -70,9 +69,9 @@ const findUserById = async (req, res) => {
 
 const updateUser = async (req, res) => {
     try {
-        const { nome, sobrenome, email, username, senha, avatar } = req.body
+        const { nome, sobrenome, email, username, senha} = req.body
 
-        if (!nome && !sobrenome && !email && !username && !senha && !avatar) {
+        if (!nome && !sobrenome && !email && !username && !senha) {
 
             res.status(400).send({message: "Preencha pelo menos um campo."})
         }
@@ -86,8 +85,7 @@ const updateUser = async (req, res) => {
             sobrenome, 
             email, 
             username, 
-            senha, 
-            avatar
+            senha
         )
 
         return res.status(201).send({message: "Dados de usuário atualizados."})
