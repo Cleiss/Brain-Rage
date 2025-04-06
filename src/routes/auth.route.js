@@ -1,5 +1,5 @@
 import route from "express"
-import login from "../controllers/auth.contoller.js"
+import login from "../controllers/auth.controller.js"
 
 const router = route()
 

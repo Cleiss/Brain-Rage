@@ -1,0 +1,274 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Documentação API Brain Rage.",
+        "description": "Documentação para end-points, rotas disponíveis, etc.",
+        "version": "0.0.1"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:5000",
+            "description": "servidor local"
+        },
+        {
+            "url": "",
+            "description": "servidor Render"
+        }
+    ],
+    "paths": {
+        "/users": {
+            "get": {
+                "summary": "Busca todos os usuários.",
+                "description": "Rota responsável por buscar todos os usuários.",
+                "tags": [
+                    "Users"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "responses": {
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "400": {
+                        "description": "Not Found"
+                    },
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Users"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/users/create": {
+            "post": {
+                "summary": "Cria um novo usuário.",
+                "description": "Rota responsável por criar um novo usuário.",
+                "tags": [
+                    "Users"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Users"
+                            },
+                            "examples": {
+                                "User": {
+                                    "value": {
+                                        "nome": "testar",
+                                        "sobrenome": "userteste3",
+                                        "email": "userteste3@gmail.com",
+                                        "username": "nick qualquer",
+                                        "senha": "123"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "400": {
+                        "description": "Not Found"
+                    },
+                    "201": {
+                        "description": "Created",
+                        "content": {
+                            "application/json": {
+                                "schemma": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/Users"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/users/{id}": {
+            "get": {
+                "summary": "Busca usuário por id",
+                "description": "Rota responsável por buscar usuário por id",
+                "tags": [
+                    "Users"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "type": "string",
+                        "description": "User ID",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "400": {
+                        "description": "Not Found"
+                    },
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/Users"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/users/updt/{id}": {
+            "patch": {
+                "summary": "Atualiza dados de usuário por id.",
+                "description": "Rota responsável por atualizar dados de usuário por id.",
+                "tags": [
+                    "Users"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "type": "string",
+                        "description": "Usuário ID",
+                        "required": true
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Users"
+                            },
+                            "examples": {
+                                "User": {
+                                    "value": {
+                                        "nome": "testar",
+                                        "sobrenome": "userteste3",
+                                        "email": "userteste3@gmail.com",
+                                        "username": "nick qualquer",
+                                        "senha": "123456"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "400": {
+                        "description": "Not Found"
+                    },
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/Users"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/auth": {
+            "post": {
+                "summary": "Login na aplicação.",
+                "description": "Rota responsável pela autenticação de login.",
+                "tags": [
+                    "Auth"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Users"
+                            },
+                            "examples": {
+                                "users": {
+                                    "value": {
+                                        "email": "usuario@gmail.com",
+                                        "senha": "123"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "400": {
+                        "description": "Not Found"
+                    },
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "scheme": "bearer",
+                "bearerFormat": "JWT"
+            }
+        },
+        "schemas": {
+                "Users": {
+                    "type": "object",
+                    "properties": {
+                        "nome": {
+                            "type": "String"
+                        },
+                        "sobrenome": {
+                            "type": "String"
+                        },
+                        "email": {
+                            "type": "String"
+                        },
+                        "username": {
+                            "type": "String"
+                        },
+                        "senha": {
+                            "type": "String"
+                        }
+                    }
+                }
+            }
+    }
+}

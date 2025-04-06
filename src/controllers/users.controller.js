@@ -53,12 +53,12 @@ const findAllUsers = async (req, res) => {
 const findUserById = async (req, res) => {
     try {
 
-        const userrr = req.user
+        const user = req.user
 
-        console.log(userrr)
+        console.log(user)
 
         res.status(200).send({
-            userrr
+            user
         })
 
     }
