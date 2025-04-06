@@ -6,13 +6,15 @@
         "version": "0.0.1"
     },
     "servers": [
+
+        {
+            "url": "https://api-br-s5hb.onrender.com",
+            "description": "servidor Render"
+        },
+        
         {
             "url": "http://localhost:5000",
             "description": "servidor local"
-        },
-        {
-            "url": "",
-            "description": "servidor Render"
         }
     ],
     "paths": {
