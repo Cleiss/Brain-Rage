@@ -11,7 +11,7 @@ const port = process.env.PORT || 5000
 
 
 dotenv.config() /*dotenv está aqui pq a função que executa o banco de dados está sendo executada aqui no index.js*/
-app.use(cors()) /* módulo que habilita CORS para vários endpoints. evita o problema de Access-Control-Allow-Origin. */
+app.use(cors()) /*módulo que habilita CORS para vários endpoints. evita o problema de Access-Control-Allow-Origin. */
 connectDB()
 
 app.use(express.json())
