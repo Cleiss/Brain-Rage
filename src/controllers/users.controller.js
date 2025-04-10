@@ -79,9 +79,6 @@ const updateUser = async (req, res) => {
             res.status(400).send({message: "Preencha pelo menos um campo."})
         }
 
-        const id = req.id
-        const user = req.user
-
         await usersService.updateUser(
             id,
             nome, 
