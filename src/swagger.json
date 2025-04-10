@@ -72,12 +72,12 @@
                             "examples": {
                                 "User": {
                                     "value": {
-                                        "nome": "testar",
-                                        "sobrenome": "userteste3",
-                                        "email": "userteste3@gmail.com",
-                                        "username": "nick qualquer",
-                                        "senha": "123",
-                                        "pix":"duaihdi",
+                                        "nome": "",
+                                        "sobrenome": "",
+                                        "email": "",
+                                        "username": "",
+                                        "senha": "",
+                                        "pix":"",
                                         "moedas": [],
                                         "pontsem": [],
                                         "pontmen": []
@@ -173,18 +173,6 @@
                         "application/json": {
                             "schema": {
                                 "$ref": "#/components/schemas/Users"
-                            },
-                            "examples": {
-                                "User": {
-                                    "value": {
-                                        "nome": "testar",
-                                        "sobrenome": "userteste3",
-                                        "email": "userteste3@gmail.com",
-                                        "username": "nick qualquer",
-                                        "senha": "123456",
-                                        "pix": ""
-                                    }
-                                }
                             }
                         }
                     }
@@ -226,8 +214,8 @@
                             "examples": {
                                 "users": {
                                     "value": {
-                                        "email": "usuario@gmail.com",
-                                        "senha": "123"
+                                        "email": "",
+                                        "senha": ""
                                     }
                                 }
                             }
