@@ -31,8 +31,7 @@ const createUser = async (req, res) => {
 
     }
     catch (err) {
-        return res.status(500).send("erro no controller")
-    }
+        return res.status(500).send(err.keyValue)}
 }
 
 const findAllUsers = async (req, res) => {
