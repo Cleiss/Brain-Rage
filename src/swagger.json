@@ -6,12 +6,10 @@
         "version": "0.0.1"
     },
     "servers": [
-
         {
             "url": "https://api-br-s5hb.onrender.com",
             "description": "servidor Render"
         },
-        
         {
             "url": "http://localhost:5000",
             "description": "servidor local"
@@ -78,7 +76,11 @@
                                         "sobrenome": "userteste3",
                                         "email": "userteste3@gmail.com",
                                         "username": "nick qualquer",
-                                        "senha": "123"
+                                        "senha": "123",
+                                        "pix":"duaihdi",
+                                        "moedas": "",
+                                        "pontsem": "",
+                                        "pontmen": ""
                                     }
                                 }
                             }
@@ -251,26 +253,26 @@
             }
         },
         "schemas": {
-                "Users": {
-                    "type": "object",
-                    "properties": {
-                        "nome": {
-                            "type": "String"
-                        },
-                        "sobrenome": {
-                            "type": "String"
-                        },
-                        "email": {
-                            "type": "String"
-                        },
-                        "username": {
-                            "type": "String"
-                        },
-                        "senha": {
-                            "type": "String"
-                        }
+            "Users": {
+                "type": "object",
+                "properties": {
+                    "nome": {
+                        "type": "String"
+                    },
+                    "sobrenome": {
+                        "type": "String"
+                    },
+                    "email": {
+                        "type": "String"
+                    },
+                    "username": {
+                        "type": "String"
+                    },
+                    "senha": {
+                        "type": "String"
                     }
                 }
             }
+        }
     }
 }
