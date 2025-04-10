@@ -270,6 +270,18 @@
                     },
                     "senha": {
                         "type": "String"
+                    },
+                    "pix": {
+                        "type": "String"
+                    },
+                    "moedas": {
+                        "type": "Number"
+                    },
+                    "pontsem": {
+                        "type": "Number"
+                    },
+                    "pontmen": {
+                        "type": "Number"
                     }
                 }
             }
