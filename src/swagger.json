@@ -181,7 +181,11 @@
                                         "sobrenome": "userteste3",
                                         "email": "userteste3@gmail.com",
                                         "username": "nick qualquer",
-                                        "senha": "123456"
+                                        "senha": "123456",
+                                        "pix": "",
+                                        "moedas": [],
+                                        "pontsem": [],
+                                        "pontmen": []
                                     }
                                 }
                             }
@@ -275,13 +279,13 @@
                         "type": "String"
                     },
                     "moedas": {
-                        "type": "Number"
+                        "type": "Array"
                     },
                     "pontsem": {
-                        "type": "Number"
+                        "type": "Array"
                     },
                     "pontmen": {
-                        "type": "Number"
+                        "type": "Array"
                     }
                 }
             }

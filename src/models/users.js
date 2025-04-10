@@ -32,13 +32,13 @@ const UserSchema = new mongoose.Schema(
             required: true
         },
         moedas: {
-            type: Number
+            type: Array
         },
         pontsem: {
-            type: Number
+            type: Array
         },
         pontmen: {
-            type: Number
+            type: Array
         }
     } /*required é a verificação dos dados no bd*/
 )
