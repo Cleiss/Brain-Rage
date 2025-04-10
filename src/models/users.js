@@ -29,7 +29,8 @@ const UserSchema = new mongoose.Schema(
         },
         pix: {
             type: String,
-            required: true
+            required: true,
+            unique: true
         },
         moedas: {
             type: Array

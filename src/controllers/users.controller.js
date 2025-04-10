@@ -72,9 +72,9 @@ const findUserById = async (req, res) => {
 
 const updateUser = async (req, res) => {
     try {
-        const { nome, sobrenome, email, username, senha} = req.body
+        const { nome, sobrenome, email, username, senha, pix, moedas, pontsem, pontmen} = req.body
 
-        if (!nome && !sobrenome && !email && !username && !senha) {
+        if (!nome && !sobrenome && !email && !username && !senha && !pix) {
 
             res.status(400).send({message: "Preencha pelo menos um campo."})
         }
