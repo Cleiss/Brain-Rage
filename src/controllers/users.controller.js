@@ -88,7 +88,8 @@ const updateUser = async (req, res) => {
             sobrenome, 
             email, 
             username, 
-            senha
+            senha,
+            pix
         )
 
         return res.status(201).send({message: "Dados de usuário atualizados."})
