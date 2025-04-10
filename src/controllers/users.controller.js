@@ -3,9 +3,9 @@ import usersService from "../services/users.service.js"
 
 const createUser = async (req, res) => {
     try {
-        const { nome, sobrenome, email, username, senha, moedas, pontsem, pontmen} = req.body
+        const { nome, sobrenome, email, username, senha, pix, moedas, pontsem, pontmen} = req.body
 
-        if (!nome || !sobrenome || !email || !username || !senha) {
+        if (!nome || !sobrenome || !email || !username || !senha || !pix) {
 
             return res.status(400).send({ message: "Preencha todos os campos!" })
         }
