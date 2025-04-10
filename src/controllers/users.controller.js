@@ -23,7 +23,11 @@ const createUser = async (req, res) => {
                 nome,
                 sobrenome,
                 email,
-                username, moedas, pontsem, pontmen
+                pix,
+                username, 
+                moedas, 
+                pontsem, 
+                pontmen
             },
             message: "Um novo usuário foi criado!"
         })
