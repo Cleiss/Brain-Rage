@@ -31,7 +31,7 @@ const createUser = async (req, res) => {
 
     }
     catch (err) {
-        return res.status(500).send({ message: err.message })
+        return res.status(500).send(err)
     }
 }
 
