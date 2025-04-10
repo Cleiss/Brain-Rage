@@ -82,8 +82,8 @@ const authMidd = (req, res, next) => {
             //console.log(req.id)
             //console.log(user.id)
 
-            if (req.id != user.id) 
-            throw new Error ('Atualização não permitida.')
+            if (req.id != user.id) //verifica se o "id" enviado e o "id" de quem está logado são os mesmos
+            throw new Error ('Atualização não permitida.') 
         
         })
 
