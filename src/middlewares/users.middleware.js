@@ -79,14 +79,13 @@ const authMidd = (req, res, next) => {
                 return res.status(401).send({ message: 'Token inválido 2.' }) //verifica se há valor em "user" ou "user.id"
             }
 
-            /*console.log(user.id)
-            console.log(id)*/
+            console.log(user.id)
+            console.log(id)
 
             if ( id !== user.id) {
                 return res.status(401).send({ message: 'Token inválido 3.' }) //verifica se o "id" enviado e o "id" de quem está logado são os mesmos
             }
 
-            req.userId = user.id
         
         })
 
