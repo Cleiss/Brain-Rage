@@ -58,8 +58,6 @@ const findUserById = async (req, res) => {
 
         const user = req.user
 
-        console.log(user)
-
         res.status(200).send({
             user
         })

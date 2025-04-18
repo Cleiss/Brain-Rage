@@ -30,7 +30,6 @@ const validUser = async (req, res, next) => {
         const id = req.params.id
 
         const user = await usersService.findUserById(id)
-        console.log(user)
 
         if (!user) {
 
@@ -84,7 +83,7 @@ const authMidd = (req, res, next) => {
             //console.log(user.id)
 
             if (req.id != user.id) //verifica se o "id" enviado e o "id" de quem está logado são os mesmos
-            throw new Error ('Atualização não permitida.') 
+            throw new Error ('Atualização não permitida.')
         
         })
 
