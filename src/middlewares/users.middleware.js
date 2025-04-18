@@ -18,7 +18,7 @@ const validId = (req, res, next) => {
         next()
     }
     catch (err) {
-        return res.status(500).send({ message: err.message })
+        return res.status(500).send({ message: 'erro 500 valid id' })
     }
 
 
@@ -43,7 +43,7 @@ const validUser = async (req, res, next) => {
     }
     catch (err) {
 
-        return res.status(500).send({ message: err.message })
+        return res.status(500).send({ message: 'erro 500 valid user' })
     }
 }
 
@@ -92,7 +92,7 @@ const authMidd = (req, res, next) => {
     }
     catch (err) {
 
-        return res.status(500).send({ message: err.message })
+        return res.status(500).send({ message: 'erro 500 authmid' })
     }
 
 
