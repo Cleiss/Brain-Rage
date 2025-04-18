@@ -30,6 +30,7 @@ const validUser = async (req, res, next) => {
         const id = req.params.id
 
         const user = await usersService.findUserById(id)
+        console.log(user)
 
         if (!user) {
 
