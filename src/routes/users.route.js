@@ -1,13 +1,17 @@
 import route from "express";
 import usersController from "../controllers/users.controller.js"
-import middleware from "../middlewares/users.middleware.js" 
+import authMidd from "../middlewares/auth.middleware.js";
+import {validId, validUser} from "../middlewares/global.middleware.js"
+
 
 
 const router = route()
 
 router.post("/create", /*middleware*/ usersController.createUser)
 router.get("/", usersController.findAllUsers)
-router.get("/login/:id", middleware.validId, middleware.validUser, middleware.authMidd, usersController.findUserById)
-router.patch("/updt/:id", middleware.validId, middleware.validUser, middleware.authMidd, usersController.updateUser)
+
+
+router.get("/login/:id", authMidd, validId, validUser, usersController.findUserById)
+router.patch("/updt/:id", validId, validUser, usersController.updateUser)
 
 export default router

@@ -1,56 +1,12 @@
-import mongoose from "mongoose";
-import jwt from "jsonwebtoken"
 import usersService from "../services/users.service.js"
 import dotenv from "dotenv"
+import jwt from "jsonwebtoken"
 
 dotenv.config()
-
-/*validId vai verificar se o id é um id válido do BD*/
-const validId = (req, res, next) => {
-    try {
-        const id = req.params.id
-
-        if (!mongoose.Types.ObjectId.isValid(id)) {
-
-            return res.status(400).send({ message: "Id de usuário inválido." })
-        }
-
-        next()
-    }
-    catch (err) {
-        return res.status(500).send({ message: 'erro 500 valid id' })
-    }
-
-
-}
-
-/*validUser vai verificar se o usuário está válido no BD de acordo com o id*/
-const validUser = async (req, res, next) => {
-    try {
-        const id = req.params.id
-
-        const user = await usersService.findUserById(id)
-
-        if (!user) {
-
-            return res.status(400).send({ message: "Usuário não encontrado." })
-        }
-
-        req.id = id
-        req.user = user
-
-        next()
-    }
-    catch (err) {
-
-        return res.status(500).send({ message: 'erro 500 valid user' })
-    }
-}
 
 const authMidd = (req, res, next) => {
     try {
         const { authorization } = req.headers
-        const {id} = req.params
 
         if (!authorization) {
             return res.status(401) //verifica se authorization contém um valor
@@ -79,15 +35,16 @@ const authMidd = (req, res, next) => {
                 return res.status(401).send({ message: 'Token inválido 2.' }) //verifica se há valor em "user" ou "user.id"
             }
 
-            //console.log(req.id)
+            req.userId = user.id
+
+            //console.log(req)
             //console.log(user.id)
 
-            if (req.id != user.id) //verifica se o "id" enviado e o "id" de quem está logado são os mesmos
-            throw new Error ('Solicitação não permitida.')
+            //if (req.id != user.id) //verifica se o "id" enviado e o "id" de quem está logado são os mesmos
+            //throw new Error ('Solicitação não permitida.')
         
+            next()
         })
-
-        next()
 
     }
     catch (err) {
@@ -95,8 +52,6 @@ const authMidd = (req, res, next) => {
         return res.status(500).send({ message: 'erro 500 authmid' })
     }
 
-
 }
 
-
-export default { validId, validUser, authMidd }
+export default authMidd
