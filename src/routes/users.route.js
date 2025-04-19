@@ -12,6 +12,6 @@ router.get("/", usersController.findAllUsers)
 
 
 router.get("/login/:id", authMidd, validId, validUser, usersController.findUserById)
-router.patch("/updt/:id", validId, validUser, usersController.updateUser)
+router.patch("/updt/:id", authMidd, validId, validUser, usersController.updateUser)
 
 export default router

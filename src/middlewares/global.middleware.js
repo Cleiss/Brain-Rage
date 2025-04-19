@@ -6,7 +6,6 @@ import usersService from "../services/users.service.js"
 const validId = (req, res, next) => {
     try {
         const id = req.userId
-        console.log(id)
 
         if (!mongoose.Types.ObjectId.isValid(id)) {
 
@@ -19,7 +18,6 @@ const validId = (req, res, next) => {
         return res.status(500).send({ message: err.message })
     }
 
-
 }
 
 /*validUser vai verificar se o usuário está válido no BD de acordo com o id*/
@@ -28,7 +26,6 @@ const validUser = async (req, res, next) => {
     try {
 
         const id = req.userId
-        //console.log(id)
 
         const user = await usersService.findUserById(id)
 

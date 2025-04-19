@@ -1,9 +1,10 @@
+import { response } from "express"
 import usersService from "../services/users.service.js"
 
 
 const createUser = async (req, res) => {
     try {
-        const { nome, sobrenome, email, username, senha, pix, moedas, pontsem, pontmen} = req.body
+        const { nome, sobrenome, email, username, senha, pix, moedas, pontsem, pontmen } = req.body
 
         if (!nome || !sobrenome || !email || !username || !senha || !pix) {
 
@@ -24,9 +25,9 @@ const createUser = async (req, res) => {
                 sobrenome,
                 email,
                 pix,
-                username, 
-                moedas, 
-                pontsem, 
+                username,
+                moedas,
+                pontsem,
                 pontmen
             },
             message: "Um novo usuário foi criado!"
@@ -35,7 +36,8 @@ const createUser = async (req, res) => {
 
     }
     catch (err) {
-        return res.status(500).send(err.keyValue)}
+        return res.status(500).send(err.keyValue)
+    }
 }
 
 const findAllUsers = async (req, res) => {
@@ -59,8 +61,6 @@ const findUserById = async (req, res) => {
         const usuario = req.user
         const id = req.userId
 
-        //console.log(usuario)
-
         res.send({
             usuario
         })
@@ -72,28 +72,37 @@ const findUserById = async (req, res) => {
 }
 
 const updateUser = async (req, res) => {
+
     try {
-        const { nome, sobrenome, email, username, senha, pix, moedas, pontsem, pontmen} = req.body
+
+        const id = req.userId
+        const reqId = req.params.id
+
+        const { nome, sobrenome, email, username, senha, pix, moedas, pontsem, pontmen } = req.body
 
         if (!nome && !sobrenome && !email && !username && !senha && !pix) {
 
-            res.status(400).send({message: "Preencha pelo menos um campo."})
+            res.status(400).send({ message: "Preencha pelo menos um campo." })
+        }
+
+        if (id != reqId) {
+            return res.status(401).send({message:'Solicitação não permitida.'})
         }
 
         await usersService.updateUser(
             id,
-            nome, 
-            sobrenome, 
-            email, 
-            username, 
+            nome,
+            sobrenome,
+            email,
+            username,
             senha,
             pix
         )
 
-        return res.status(201).send({message: "Dados de usuário atualizados."})
+        return res.status(201).send({ message: "Dados de usuário atualizados." })
     }
     catch (err) {
-        return res.status(500).send({message: err.message})
+        return res.status(500).send({ message: err.message })
     }
 }
 

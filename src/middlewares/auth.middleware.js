@@ -10,39 +10,36 @@ const authMidd = (req, res, next) => {
 
         if (!authorization) {
             return res.status(401) //verifica se authorization contém um valor
-        } 
+        }
 
         const authHeader = authorization.split(" ")
 
         if (authHeader.length !== 2) {
             return res.status(401) //verifica se o array authHeader possui 2 elementos
-        } 
+        }
 
         const [schema, token] = authHeader //nomeia os elementos do array authHeader
 
         if (schema !== "Bearer") {
             return res.status(401) //verifica se o valor do elemento schema é "Bearer"
-        } 
+        }
 
         jwt.verify(token, process.env.SECRET_JWT, async (erro, decoded) => { //verifica o token e decodifica
             if (erro) {
-                return res.status(401).send({ message: "Token inválido 1." })
-            } 
+                return res.status(401).send({ message: "Solicitação não permitida." })
+            }
 
             const user = await usersService.findUserById(decoded.id) //busca o token decodificado/id no banco de dados
-        
+
             if (!user || !user.id) {
-                return res.status(401).send({ message: 'Token inválido 2.' }) //verifica se há valor em "user" ou "user.id"
+                return res.status(401).send({ message: 'Solicitação não permitida.' }) //verifica se há valor em "user" ou "user.id"
             }
 
             req.userId = user.id
 
-            //console.log(req)
-            //console.log(user.id)
+            if (req.params.id != user.id) //verifica se o "id" enviado e o "id" de quem está logado são os mesmos
+                return res.status(401).send({ message: 'Solicitação não permitida.' })
 
-            //if (req.id != user.id) //verifica se o "id" enviado e o "id" de quem está logado são os mesmos
-            //throw new Error ('Solicitação não permitida.')
-        
             next()
         })
 
