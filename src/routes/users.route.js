@@ -11,7 +11,7 @@ router.post("/create", /*middleware*/ usersController.createUser)
 router.get("/", usersController.findAllUsers)
 
 
-router.get("/login/:id", authMidd, validId, validUser, usersController.findUserById)
+router.get("/:id", authMidd, validId, validUser, usersController.findUserById)
 router.patch("/updt/:id", authMidd, validId, validUser, usersController.updateUser)
 
 export default router
