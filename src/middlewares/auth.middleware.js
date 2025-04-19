@@ -36,9 +36,11 @@ const authMidd = (req, res, next) => {
             }
 
             req.userId = user.id
+            console.log(user.id)
+            console.log(req.params.id)
 
-            if (req.params.id != user.id) //verifica se o "id" enviado e o "id" de quem está logado são os mesmos
-                return res.status(401).send({ message: 'Solicitação não permitida.' })
+            /*if (req.params.id != user.id) //verifica se o "id" enviado e o "id" de quem está logado são os mesmos
+                return res.status(401).send({ message: 'Solicitação não permitida.' })*/
 
             next()
         })
