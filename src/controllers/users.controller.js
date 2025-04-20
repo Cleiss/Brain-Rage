@@ -1,4 +1,3 @@
-import { response } from "express"
 import usersService from "../services/users.service.js"
 
 
@@ -78,15 +77,19 @@ const updateUser = async (req, res) => {
         const id = req.userId
         const reqId = req.params.id
 
-        const { nome, sobrenome, email, username, senha, pix, moedas, pontsem, pontmen } = req.body
+        const { nome, sobrenome, email, username,
+            senha, pix, moedas, pont_total, pont_atual,
+            pont_sem, seqServ, seqPlay } = req.body
 
-        if (!nome && !sobrenome && !email && !username && !senha && !pix) {
+        if (!nome && !sobrenome && !email && !username
+            && !senha && !pix && !moedas && !pont_total
+            && !pont_atual && !pont_sem && !seqServ && !seqPlay) {
 
             res.status(400).send({ message: "Preencha pelo menos um campo." })
         }
 
         if (id != reqId) {
-            return res.status(401).send({message:'Solicitação não permitida.'})
+            return res.status(401).send({ message: 'Solicitação não permitida.' })
         }
 
         await usersService.updateUser(
@@ -96,7 +99,8 @@ const updateUser = async (req, res) => {
             email,
             username,
             senha,
-            pix
+            pix, moedas, pont_total, pont_atual,
+            pont_sem, seqServ, seqPlay
         )
 
         return res.status(201).send({ message: "Dados de usuário atualizados." })

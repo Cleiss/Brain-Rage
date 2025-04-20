@@ -78,9 +78,9 @@
                                         "username": "",
                                         "senha": "",
                                         "pix":"",
-                                        "moedas": [],
-                                        "pontsem": [],
-                                        "pontmen": []
+                                        "moedas": "",
+                                        "pontsem": "",
+                                        "pontmen": ""
                                     }
                                 }
                             }
@@ -264,13 +264,13 @@
                         "type": "String"
                     },
                     "moedas": {
-                        "type": "Array"
+                        "type": "Number"
                     },
                     "pontsem": {
-                        "type": "Array"
+                        "type": "Number"
                     },
                     "pontmen": {
-                        "type": "Array"
+                        "type": "Number"
                     }
                 }
             }

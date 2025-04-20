@@ -8,14 +8,14 @@ const login = async (req, res) => {
         const user = await authService.loginService(email)
 
         if (!user) {
-            return res.status(404).send({message: "Usuário ou senha inválidos."})
+            return res.status(404).send("Usuário ou senha inválidos.")
 
         }
 
         const validSenha = bcrypt.compareSync(senha, user.senha)
 
         if (!validSenha) {
-            return res.status(404).send({message: "Usuário ou senha inválidos."})
+            return res.status(404).send("Usuário ou senha inválidos.")
 
         }
 
