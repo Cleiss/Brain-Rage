@@ -15,7 +15,7 @@ const confirmgame = async (req, res) => {
             return res.status(401).send({ message: 'Solicitação não autorizada.' })
         }
 
-        const compCor = []
+        const compCor = 5
         const ok = 'ok!'
         const segjogo = 'continue'
         const perdeu = 'perdeu'

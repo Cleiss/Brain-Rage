@@ -58,7 +58,7 @@ const findUserById = async (req, res) => {
     try {
 
         const id = req.userId
-        console.log(id)
+        //console.log(id)
 
         const user = await usersService.findUserById(id)
 
