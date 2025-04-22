@@ -20,7 +20,6 @@ const criarcor = async (req, res) => {
         }
 
         await usersService.updateseqServ(id, seqServ)
-
         return res.status(201).send(user.seqServ)
     }
     catch (erro) {

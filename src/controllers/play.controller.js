@@ -9,11 +9,11 @@ const playcor = async (req, res) => {
         //console.log(id)
 
         const user = await usersService.findUserById(id)
-        console.log(user)
+        //console.log(user)
 
-        const cor = Math.floor(Math.random() * 5)
-        const seqPlay = user.SeqPlay
-        seqPlay.push(cor)
+        const cor = req.body.data
+        const seqPlay = cor
+        //console.log(seqPlay)
 
         
         if (!id || !user) {
