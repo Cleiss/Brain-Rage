@@ -6,8 +6,6 @@ import playController from "../controllers/play.controller.js";
 import confgame from "../controllers/confirm.controller.js"
 
 
-
-
 const router = route()
 
 router.post("/create", /*middleware*/ usersController.createUser)
