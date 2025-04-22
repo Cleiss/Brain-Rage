@@ -57,12 +57,12 @@ const findAllUsers = async (req, res) => {
 const findUserById = async (req, res) => {
     try {
 
-        const usuario = req.user
         const id = req.userId
+        console.log(id)
 
-        res.send({
-            usuario
-        })
+        const user = await usersService.findUserById(id)
+
+        res.send(user)
 
     }
     catch (err) {
@@ -75,20 +75,24 @@ const updateUser = async (req, res) => {
     try {
 
         const id = req.userId
-        const reqId = req.params.id
+        //const reqId = req.params.id //para teste no thunderclient
+        //console.log(id)
+        //console.log(reqId)
 
         const { nome, sobrenome, email, username,
             senha, pix, moedas, pont_total, pont_atual,
-            pont_sem, seqServ, seqPlay } = req.body
+            pont_sem, seqServ, SeqPlay } = req.body
 
         if (!nome && !sobrenome && !email && !username
             && !senha && !pix && !moedas && !pont_total
-            && !pont_atual && !pont_sem && !seqServ && !seqPlay) {
+            && !pont_atual && !pont_sem && !seqServ && !SeqPlay) {
 
             res.status(400).send({ message: "Preencha pelo menos um campo." })
         }
 
-        if (id != reqId) {
+        const user = await usersService.findUserById(id)
+
+        if (!id || !user) {
             return res.status(401).send({ message: 'Solicitação não permitida.' })
         }
 
@@ -100,7 +104,7 @@ const updateUser = async (req, res) => {
             username,
             senha,
             pix, moedas, pont_total, pont_atual,
-            pont_sem, seqServ, seqPlay
+            pont_sem, seqServ, SeqPlay
         )
 
         return res.status(201).send({ message: "Dados de usuário atualizados." })
@@ -109,5 +113,6 @@ const updateUser = async (req, res) => {
         return res.status(500).send({ message: err.message })
     }
 }
+
 
 export default { createUser, findAllUsers, findUserById, updateUser }

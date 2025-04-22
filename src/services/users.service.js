@@ -8,11 +8,19 @@ const findUserById = (id) => Users_BrainRage.findById(id)
 
 const updateUser = (id, nome, sobrenome, email, username,
     senha, pix, moedas, pont_sem, pont_atual, pont_total,
-    seqServ, seqPlay) => Users_BrainRage.findOneAndUpdate({ _id: id }, {
+    seqServ, SeqPlay) => Users_BrainRage.findOneAndUpdate({ _id: id }, {
         nome, sobrenome, email, username,
         senha, pix, moedas, pont_total, pont_atual,
-        pont_sem, seqServ, seqPlay
+        pont_sem, seqServ, SeqPlay
     })
 
+const updateseqServ = (id, seqServ) => 
+    Users_BrainRage.findByIdAndUpdate({ _id: id }, {seqServ})
 
-export default { createUser, findAllUsers, findUserById, updateUser }
+const updateseqPlay = (id, SeqPlay) => 
+    Users_BrainRage.findByIdAndUpdate({ _id: id }, {SeqPlay})
+
+const confirmById = (id) => Users_BrainRage.findById(id)
+
+
+export default { createUser, findAllUsers, findUserById, updateUser, updateseqServ, updateseqPlay, confirmById }
