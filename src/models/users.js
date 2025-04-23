@@ -35,13 +35,13 @@ const UserSchema = new mongoose.Schema(
         moedas: {
             type: Array
         },
-        pont_atual: {
+        pont_prov: {
             type: Array
         },
         pont_total: {
             type: Array
         },
-        pont_sem: {
+        pont_atual: {
             type: Array
         },
         seqServ: {

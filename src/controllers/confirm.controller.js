@@ -16,25 +16,64 @@ const confirmgame = async (req, res) => {
         }
 
         const compCor = 10
-        const ok = [0]
         const segjogo = [1]
         const perdeu = [2]
+        const pont_prov = user.pont_prov
+        const pont_total = user.pont_total
+        const pont_atual = user.pont_atual
 
-       if (user.seqServ.length === user.SeqPlay.length &&
+        if (user.seqServ.length === user.SeqPlay.length &&
             user.seqServ.every((val, index) => val === user.SeqPlay[index])) {
             if (user.seqServ.length === compCor) {
 
                 const seqServ = []
                 await usersService.updateseqServ(id, seqServ)
+
+                const SeqPlay = []
+                await usersService.updateseqPlay(id, SeqPlay)
+
+                const ptotal = pont_prov[0] + pont_total[0] + 1
+                await usersService.updatepont_total(id, ptotal)
+
+                const patual = pont_prov[0] + 1
+                await usersService.updatepont_atual(id, patual)
+
+                const prov = [0]
+                await usersService.updatepont_atual(id, prov)
+
+                //console.log(ptotal)
+
                 return res.status(201).send(ok)
             }
             else {
+
+                const prov = pont_prov[0] + 1
+                //console.log(patual)
+                await usersService.updatepont_prov(id, prov)
+
+                const patual = pont_prov[0] + 1
+                if (patual >= 3 && patual >= pont_atual && patual <= 25) {
+                    await usersService.updatepont_atual(id, patual)
+                }
                 return res.status(201).send(segjogo)
             }
         }
         else {
+
             const seqServ = []
             await usersService.updateseqServ(id, seqServ)
+
+            const SeqPlay = []
+            await usersService.updateseqPlay(id, SeqPlay)
+
+            const ptotal = pont_atual[0] + pont_total[0]
+            if (ptotal > pont_total) {
+                await usersService.updatepont_total(id, ptotal)
+            }
+
+            const prov = [0]
+            await usersService.updatepont_prov(id, prov)
+
             return res.status(201).send(perdeu)
         }
     }
@@ -44,4 +83,4 @@ const confirmgame = async (req, res) => {
 
 }
 
-export default {confirmgame}
+export default { confirmgame }

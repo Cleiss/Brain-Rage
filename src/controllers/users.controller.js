@@ -3,7 +3,7 @@ import usersService from "../services/users.service.js"
 
 const createUser = async (req, res) => {
     try {
-        const { nome, sobrenome, email, username, senha, pix, moedas, pontsem, pontmen } = req.body
+        const { nome, sobrenome, email, username, senha, pix} = req.body
 
         if (!nome || !sobrenome || !email || !username || !senha || !pix) {
 
@@ -23,11 +23,7 @@ const createUser = async (req, res) => {
                 nome,
                 sobrenome,
                 email,
-                pix,
-                username,
-                moedas,
-                pontsem,
-                pontmen
+                pix
             },
             message: "Um novo usuário foi criado!"
         })
@@ -80,12 +76,10 @@ const updateUser = async (req, res) => {
         //console.log(reqId)
 
         const { nome, sobrenome, email, username,
-            senha, pix, moedas, pont_total, pont_atual,
-            pont_sem, seqServ, SeqPlay } = req.body
+            senha, pix} = req.body
 
         if (!nome && !sobrenome && !email && !username
-            && !senha && !pix && !moedas && !pont_total
-            && !pont_atual && !pont_sem && !seqServ && !SeqPlay) {
+            && !senha && !pix) {
 
             res.status(400).send({ message: "Preencha pelo menos um campo." })
         }
@@ -103,8 +97,7 @@ const updateUser = async (req, res) => {
             email,
             username,
             senha,
-            pix, moedas, pont_total, pont_atual,
-            pont_sem, seqServ, SeqPlay
+            pix
         )
 
         return res.status(201).send({ message: "Dados de usuário atualizados." })
