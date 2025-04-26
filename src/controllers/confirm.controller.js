@@ -15,7 +15,7 @@ const confirmgame = async (req, res) => {
             return res.status(401).send({ message: 'Solicitação não autorizada.' })
         }
 
-        const compCor = 5
+        const compCor = 10
         const venceu = [0]
         const segjogo = [1]
         const perdeu = [2]
@@ -51,11 +51,11 @@ const confirmgame = async (req, res) => {
             }
             else {
 
-                const prov = pontProv+1
+                const prov = pontProv + 1
                 await usersService.updatepontProv(id, prov)
 
                 const patual = pontProv + 1
-                if (patual >= 3 && patual >= pontAtual && patual <= 25) {
+                if (patual >= 5 && patual >= pontAtual && patual <= 25) {
                     await usersService.updatepontAtual(id, patual)
                 }
                 return res.status(201).send(segjogo)
@@ -70,7 +70,7 @@ const confirmgame = async (req, res) => {
             await usersService.updateseqPlay(id, SeqPlay)
 
             const ptotal = pontAtual + pontTotal
-            if (ptotal > pontTotal && pontProv >= 3) {
+            if (ptotal > pontTotal && pontProv >= 5) {
                 await usersService.updatepontTotal(id, ptotal)
                 await usersService.updatehora(id, tempo)
             }
@@ -78,8 +78,12 @@ const confirmgame = async (req, res) => {
             const prov = 0
             await usersService.updatepontProv(id, prov)
 
-            //const rank = await usersService.findRank()
-            //console.log(rank[0].Score)
+            const rank = await usersService.findRank()
+
+            console.log(rank[0].Score.pontAtual)
+            console.log(rank[0].username)
+            console.log(rank[0].Score.AtualizadoEm)
+
 
             return res.status(201).send(perdeu)
         }

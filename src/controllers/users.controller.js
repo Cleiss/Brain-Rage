@@ -3,7 +3,7 @@ import usersService from "../services/users.service.js"
 
 const createUser = async (req, res) => {
     try {
-        const { nome, sobrenome, email, username, senha, pix} = req.body
+        const { nome, sobrenome, email, username, senha, pix, moedas} = req.body
 
         if (!nome || !sobrenome || !email || !username || !senha || !pix) {
 
@@ -23,7 +23,7 @@ const createUser = async (req, res) => {
                 nome,
                 sobrenome,
                 email,
-                pix
+                pix, moedas
             },
             message: "Um novo usuário foi criado!"
         })
@@ -31,7 +31,7 @@ const createUser = async (req, res) => {
 
     }
     catch (err) {
-        return res.status(500).send(err.keyValue)
+        return res.status(500).send(err)
     }
 }
 
