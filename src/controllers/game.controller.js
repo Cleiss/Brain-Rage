@@ -5,10 +5,8 @@ const criarcor = async (req, res) => {
     try {
 
         const id = req.userId
-        //console.log(id)
 
         const user = await usersService.findUserById(id)
-        //console.log(user)
 
         const cor = Math.floor(Math.random() * 5)
         const seqServ = user.seqServ

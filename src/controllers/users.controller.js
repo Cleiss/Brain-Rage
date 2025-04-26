@@ -17,14 +17,6 @@ const createUser = async (req, res) => {
         }
 
         return res.status(201).send({
-
-            user: {
-                id: user._id,
-                nome,
-                sobrenome,
-                email,
-                pix, moedas
-            },
             message: "Um novo usuário foi criado!"
         })
 
@@ -54,7 +46,6 @@ const findUserById = async (req, res) => {
     try {
 
         const id = req.userId
-        //console.log(id)
 
         const user = await usersService.findUserById(id)
 
@@ -71,9 +62,6 @@ const updateUser = async (req, res) => {
     try {
 
         const id = req.userId
-        //const reqId = req.params.id //para teste no thunderclient
-        //console.log(id)
-        //console.log(reqId)
 
         const { nome, sobrenome, email, username,
             senha, pix} = req.body

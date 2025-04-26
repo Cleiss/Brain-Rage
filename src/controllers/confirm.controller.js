@@ -5,11 +5,8 @@ const confirmgame = async (req, res) => {
     try {
 
         const id = req.userId
-        //console.log(req.id)
-        //console.log(id)
 
         const user = await usersService.confirmById(id)
-        //console.log(user)
 
         if (!id || !user) {
             return res.status(401).send({ message: 'Solicitação não autorizada.' })
@@ -45,8 +42,6 @@ const confirmgame = async (req, res) => {
                 const prov = 0
                 await usersService.updatepontProv(id, prov)
 
-                //console.log(ptotal)
-
                 return res.status(201).send(venceu)
             }
             else {
@@ -77,13 +72,6 @@ const confirmgame = async (req, res) => {
 
             const prov = 0
             await usersService.updatepontProv(id, prov)
-
-            const rank = await usersService.findRank()
-
-            console.log(rank[0].Score.pontAtual)
-            console.log(rank[0].username)
-            console.log(rank[0].Score.AtualizadoEm)
-
 
             return res.status(201).send(perdeu)
         }

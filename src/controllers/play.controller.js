@@ -5,15 +5,11 @@ const playcor = async (req, res) => {
     try {
 
         const id = req.userId
-        //console.log(req.id)
-        //console.log(id)
 
         const user = await usersService.findUserById(id)
-        //console.log(user)
 
         const cor = req.body.data
         const seqPlay = cor
-        //console.log(seqPlay)
 
         
         if (!id || !user) {

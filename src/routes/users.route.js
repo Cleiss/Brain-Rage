@@ -4,12 +4,15 @@ import {authMidd, validId, validUser} from "../middlewares/auth.middleware.js";
 import gameController from "../controllers/game.controller.js";
 import playController from "../controllers/play.controller.js";
 import confgame from "../controllers/confirm.controller.js"
+import rankController from "../controllers/rank.controller.js";
 
 
 const router = route()
 
 router.post("/create", /*middleware*/ usersController.createUser)
 router.get("/", usersController.findAllUsers)
+router.get("/ranking", authMidd, validId, validUser, rankController.rankingAtual)
+router.get("/rankingtotal", authMidd, validId, validUser, rankController.rankingTotal)
 
 
 router.get("/loc", authMidd, validId, validUser, usersController.findUserById)
