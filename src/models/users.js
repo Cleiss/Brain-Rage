@@ -33,16 +33,19 @@ const UserSchema = new mongoose.Schema(
             unique: true
         },
         moedas: {
-            type: Array
+            type: Number
         },
-        pont_prov: {
-            type: Array
-        },
-        pont_total: {
-            type: Array
-        },
-        pont_atual: {
-            type: Array
+        Score: {
+            pontAtual: {
+                type: Number
+            },
+            pontTotal: {
+                type: Number
+            },
+            pontProv: {
+                type: Number
+            },
+            AtualizadoEm: {type: Date, default: Date.now}
         },
         seqServ: {
             type: Array
@@ -50,7 +53,8 @@ const UserSchema = new mongoose.Schema(
         SeqPlay: {
             type: Array
         }
-    } /*required é a verificação dos dados no bd*/
+    },
+    { timestamps: true }
 )
 
 UserSchema.pre("save", async function (next) {
@@ -58,11 +62,11 @@ UserSchema.pre("save", async function (next) {
 
     /*função pre("save", função a ser executada) = antes de salvar algo, execute a função.
     neste caso, antes de salvar a senha, criptografe-a*/
-    
+
     next()
 })
 /* hash() criptografa a senha; 10 = quant. de salt/rodadas*/
 
-const Users_BrainRage = mongoose.model("Users_BrainRage", UserSchema)
+const UserMemo = mongoose.model("UserMemo", UserSchema)
 
-export default Users_BrainRage
+export default UserMemo

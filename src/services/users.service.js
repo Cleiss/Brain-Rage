@@ -1,34 +1,45 @@
-import Users_BrainRage from "../models/users.js";
+import UserMemo from "../models/users.js";
 
-const createUser = (body) => Users_BrainRage.create(body)
+const createUser = (body) => UserMemo.create(body)
 
-const findAllUsers = () => Users_BrainRage.find().sort({ _id: -1 })
+const findAllUsers = () => UserMemo.find().sort({ _id: -1 })
 
-const findUserById = (id) => Users_BrainRage.findById(id)
+const findRank = () => UserMemo.find().sort({
+    'Score.pontAtual': -1,
+    'Score.AtualizadoEm': -1
+}).limit(7)
+
+const findUserById = (id) => UserMemo.findById(id)
 
 const updateUser = (id, nome, sobrenome, email, username,
-    senha, pix, moedas) => Users_BrainRage.findOneAndUpdate({ _id: id }, {
+    senha, pix, moedas) => UserMemo.findOneAndUpdate({ _id: id }, {
         nome, sobrenome, email, username,
-        senha, pix, moedas})
+        senha, pix, moedas
+    })
 
-const updateseqServ = (id, seqServ) => 
-    Users_BrainRage.findByIdAndUpdate({ _id: id }, {seqServ})
+const updateseqServ = (id, seqServ) =>
+    UserMemo.findByIdAndUpdate({ _id: id }, { seqServ })
 
-const updateseqPlay = (id, SeqPlay) => 
-    Users_BrainRage.findByIdAndUpdate({ _id: id }, {SeqPlay})
+const updateseqPlay = (id, SeqPlay) =>
+    UserMemo.findByIdAndUpdate({ _id: id }, { SeqPlay })
 
-const updatepont_prov = (id, pont_prov) => 
-    Users_BrainRage.findByIdAndUpdate({ _id: id }, {pont_prov})
+const updatepontProv = (id, pontProv) =>
+    UserMemo.findByIdAndUpdate({ _id: id }, { $set: { 'Score.pontProv': pontProv } })
 
-const updatepont_total = (id, pont_total) => 
-    Users_BrainRage.findByIdAndUpdate({ _id: id }, {pont_total})
+const updatepontTotal = (id, pontTotal) =>
+    UserMemo.findByIdAndUpdate({ _id: id }, { $set: { 'Score.pontTotal': pontTotal } })
 
-const updatepont_atual = (id, pont_atual) => 
-    Users_BrainRage.findByIdAndUpdate({ _id: id }, {pont_atual})
+const updatepontAtual = (id, pontAtual) =>
+    UserMemo.findByIdAndUpdate({ _id: id }, { $set: { 'Score.pontAtual': pontAtual } })
 
-const confirmById = (id) => Users_BrainRage.findById(id)
+const updatehora = (id, AtualizadoEm) =>
+    UserMemo.findByIdAndUpdate({ _id: id }, { $set: { 'Score.AtualizadoEm': AtualizadoEm } })
+
+const confirmById = (id) => UserMemo.findById(id)
 
 
-export default { createUser, findAllUsers, findUserById,
-     updateUser, updateseqServ, updateseqPlay, confirmById,
-    updatepont_prov, updatepont_total, updatepont_atual }
+export default {
+    createUser, findAllUsers, findUserById,
+    updateUser, updateseqServ, updateseqPlay, confirmById,
+    updatepontProv, updatepontTotal, updatepontAtual, updatehora, findRank
+}
