@@ -8,6 +8,12 @@ const criarcor = async (req, res) => {
 
         const user = await usersService.findUserById(id)
 
+        const semfichas = [0]
+
+        if (user.moedas < 1) {
+            return res.status(401).send(semfichas)
+        }
+
         const cor = Math.floor(Math.random() * 5)
         const seqServ = user.seqServ
         seqServ.push(cor)

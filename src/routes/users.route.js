@@ -5,7 +5,7 @@ import gameController from "../controllers/game.controller.js";
 import playController from "../controllers/play.controller.js";
 import confgame from "../controllers/confirm.controller.js"
 import rankController from "../controllers/rank.controller.js";
-
+import seqController from "../controllers/seq.controller.js";
 
 const router = route()
 
@@ -21,5 +21,7 @@ router.patch("/updt/user", authMidd, validId, validUser, usersController.updateU
 router.patch("/updt/cor", authMidd, validId, validUser, gameController.criarcor)
 router.patch("/updt/playcor", authMidd, validId, validUser, playController.playcor)
 router.get("/confirm", authMidd, validId, validUser, confgame.confirmgame)
+
+router.patch("/resetseq", authMidd, validId, validUser, seqController.resetSeq)
 
 export default router
