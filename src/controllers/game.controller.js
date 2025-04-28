@@ -32,4 +32,27 @@ const criarcor = async (req, res) => {
 
 }
 
-export default { criarcor }
+const Fichas = async (req, res) => {
+
+    try {
+
+        const id = req.userId
+
+        const user = await usersService.findUserById(id)
+
+        const semfichas = [0]
+
+        if (user.moedas < 1) {
+            return res.status(401).send(semfichas)
+        }
+
+        const fichas = user.moedas
+        const moedas = fichas - 1
+        await usersService.updateCoin(id, moedas)
+    }
+    catch(erro) {
+        console.log(erro)
+    }
+}
+
+export default { criarcor, Fichas }

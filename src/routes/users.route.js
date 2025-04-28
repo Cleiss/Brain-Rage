@@ -23,5 +23,6 @@ router.patch("/updt/playcor", authMidd, validId, validUser, playController.playc
 router.get("/confirm", authMidd, validId, validUser, confgame.confirmgame)
 
 router.patch("/resetseq", authMidd, validId, validUser, seqController.resetSeq)
+router.patch("/updtficha", authMidd, validId, validUser, gameController.Fichas)
 
 export default router

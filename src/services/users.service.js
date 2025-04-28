@@ -21,12 +21,10 @@ const updateUser = (id, nome, sobrenome, email, username,
         nome, sobrenome, email, username,
         senha, pix
     }
-    )
+)
 
 const updateCoin = (id, moedas) =>
     UserMemo.findByIdAndUpdate({ _id: id }, { moedas })
-
-
 
 const updateseqServ = (id, seqServ) =>
     UserMemo.findByIdAndUpdate({ _id: id }, { seqServ })
