@@ -17,7 +17,7 @@ const createUser = async (req, res) => {
         }
 
         return res.status(201).send({
-            message: "Um novo usuário foi criado!"
+            message: "Usuário foi criado!"
         })
 
 
