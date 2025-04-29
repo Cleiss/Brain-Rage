@@ -17,7 +17,6 @@ const confirmgame = async (req, res) => {
         const segjogo = [1]
         const perdeu = [2]
         const tempo = new Date()
-        const fichas = user.moedas
         const pontProv = user.Score.pontProv
         const pontTotal = user.Score.pontTotal
         const pontAtual = user.Score.pontAtual
@@ -42,9 +41,6 @@ const confirmgame = async (req, res) => {
 
                 const prov = 0
                 await usersService.updatepontProv(id, prov)
-
-                /*const moedas = fichas - 1
-                await usersService.updateCoin(id, moedas)*/
 
                 return res.status(201).send(venceu)
             }
