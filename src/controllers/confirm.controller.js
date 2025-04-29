@@ -69,7 +69,7 @@ const confirmgame = async (req, res) => {
             await usersService.updateseqPlay(id, SeqPlay)
 
             const ptotal = pontAtual + pontTotal
-            if (ptotal > pontTotal && pontProv >= 5) {
+            if (ptotal > pontTotal && pontProv >= pontAtual) {
                 await usersService.updatepontTotal(id, ptotal)
                 await usersService.updatehora(id, tempo)
             }
