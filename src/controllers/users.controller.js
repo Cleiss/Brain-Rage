@@ -1,9 +1,11 @@
 import usersService from "../services/users.service.js"
+import bcrypt from "bcrypt"
+import nodemailer from 'nodemailer'
 
 
 const createUser = async (req, res) => {
     try {
-        const { nome, sobrenome, email, username, senha, pix, moedas} = req.body
+        const { nome, sobrenome, email, username, senha, pix, moedas } = req.body
 
         if (!nome || !sobrenome || !email || !username || !senha || !pix) {
 
@@ -64,7 +66,7 @@ const updateUser = async (req, res) => {
         const id = req.userId
 
         const { nome, sobrenome, email, username,
-            senha, pix} = req.body
+            senha, pix } = req.body
 
         if (!nome && !sobrenome && !email && !username
             && !senha && !pix) {
@@ -95,5 +97,67 @@ const updateUser = async (req, res) => {
     }
 }
 
+const updateSenha = async (req, res) => {
+    try {
 
-export default { createUser, findAllUsers, findUserById, updateUser }
+        const email = req.body
+
+        if (!email) {
+            return res.status(400)
+        }
+        const user = await usersService.findUserByEmail(email)
+
+        const id = user._id
+
+        function gerarSenha(tamanho) {
+            let resultado = '';
+            const caracteres = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#$%&?!';
+
+            for (let i = 0; i < tamanho; i++) {
+                resultado += caracteres.charAt(Math.floor(Math.random() * caracteres.length));
+            }
+
+            return resultado;
+        }
+
+        const novasenha = gerarSenha(7)
+
+        const senha = await bcrypt.hash(novasenha, 10)
+
+        await usersService.updateSenha(id, senha)
+        res.send(user)
+
+        const carteiro = nodemailer.createTransport({
+            host: "smtp.gmail.com",
+            port: 465,
+            secure: true, // true for 465, false for other ports
+            auth: {
+                user: "memocor.play@gmail.com",
+                pass: "jdywmbvzizllbfvt "
+            },
+        });
+
+        // Wrap in an async IIFE so we can use await.
+        (async () => {
+            const info = await carteiro.sendMail({
+                from: 'MemoCor <memocor.play@gmail.com>',
+                to: `${user.email}`,
+                subject: 'Solicitação de Nova Senha',
+                html: `<html><body>
+
+                        <h1>Sua nova senha ${novasenha} chegou!</h1>
+
+                        </body></html>`,
+                text: 'testando envio de email pelo node'
+            });
+
+            console.log("Message sent:", info.messageId);
+        })();
+    }
+    catch (erro) {
+        console.log(erro)
+    }
+}
+
+
+export default { createUser, findAllUsers, findUserById, updateUser, updateSenha }

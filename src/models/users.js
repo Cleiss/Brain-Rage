@@ -62,10 +62,10 @@ UserSchema.pre("save", async function (next) {
 
     /*função pre("save", função a ser executada) = antes de salvar algo, execute a função.
     neste caso, antes de salvar a senha, criptografe-a*/
+    /* hash() criptografa a senha; 10 = quant. de salt/rodadas*/
 
     next()
 })
-/* hash() criptografa a senha; 10 = quant. de salt/rodadas*/
 
 const UserMemo = mongoose.model("UserMemo", UserSchema)
 

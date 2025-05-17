@@ -16,12 +16,17 @@ const findRankTotal = () => UserMemo.find().sort({
 
 const findUserById = (id) => UserMemo.findById(id)
 
+const findUserByEmail = (email) => UserMemo.findOne(email)
+
+const updateSenha = (id, senha) =>
+    UserMemo.findByIdAndUpdate({ _id: id }, { senha })
+
 const updateUser = (id, nome, sobrenome, email, username,
     senha, pix) => UserMemo.findOneAndUpdate({ _id: id }, {
         nome, sobrenome, email, username,
         senha, pix
     }
-)
+    )
 
 const updateCoin = (id, moedas) =>
     UserMemo.findByIdAndUpdate({ _id: id }, { moedas })
@@ -48,8 +53,8 @@ const confirmById = (id) => UserMemo.findById(id)
 
 
 export default {
-    createUser, findAllUsers, findUserById,
+    createUser, findAllUsers, findUserById, findUserByEmail,
     updateUser, updateseqServ, updateseqPlay, confirmById,
     updatepontProv, updatepontTotal, updatepontAtual, updatehora, findRankAtual, findRankTotal,
-    updateCoin
+    updateCoin, updateSenha
 }
