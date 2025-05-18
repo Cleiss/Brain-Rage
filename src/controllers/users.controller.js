@@ -149,7 +149,7 @@ const updateSenha = async (req, res) => {
                 subject: 'Solicitação de Nova Senha',
                 html: `<html><body>
 
-                        <h1>Sua nova senha http://localhost:5173/login ${novasenha} chegou!</h1>
+                        <h1>Sua nova senha ${novasenha} chegou!</h1>
 
                         </body></html>`,
                 text: 'testando envio de email pelo node'
