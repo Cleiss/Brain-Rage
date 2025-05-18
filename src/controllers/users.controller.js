@@ -1,6 +1,7 @@
 import usersService from "../services/users.service.js"
 import bcrypt from "bcrypt"
 import nodemailer from 'nodemailer'
+import dotenv from "dotenv"
 
 
 const createUser = async (req, res) => {
@@ -132,12 +133,11 @@ const updateSenha = async (req, res) => {
             port: 465,
             secure: true, // true for 465, false for other ports
             auth: {
-                user: "memocor.play@gmail.com",
-                pass: "jdywmbvzizllbfvt "
+                user: process.env.EMAIL,
+                pass: process.env.PASS
             },
         });
 
-        // Wrap in an async IIFE so we can use await.
         (async () => {
             const info = await carteiro.sendMail({
                 from: 'MemoCor <memocor.play@gmail.com>',
