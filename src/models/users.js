@@ -52,6 +52,14 @@ const UserSchema = new mongoose.Schema(
         },
         SeqPlay: {
             type: Array
+        },
+        senhaTokenReset: {
+            type: String,
+            
+        },
+        senhaTokenExpire: {
+            type: Date,
+            
         }
     },
     { timestamps: true }

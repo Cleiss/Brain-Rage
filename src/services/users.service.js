@@ -21,6 +21,12 @@ const findUserByEmail = (email) => UserMemo.findOne(email)
 const updateSenha = (id, senha) =>
     UserMemo.findByIdAndUpdate({ _id: id }, { senha })
 
+const updatesenhaTokenReset = (id, senhaTokenReset) =>
+    UserMemo.findByIdAndUpdate({ _id: id }, { senhaTokenReset })
+
+const updatesenhaTokenExpire = (id, senhaTokenExpire) =>
+    UserMemo.findByIdAndUpdate({ _id: id }, { senhaTokenExpire })
+
 const updateUser = (id, nome, sobrenome, email, username,
     senha, pix) => UserMemo.findOneAndUpdate({ _id: id }, {
         nome, sobrenome, email, username,
@@ -56,5 +62,5 @@ export default {
     createUser, findAllUsers, findUserById, findUserByEmail,
     updateUser, updateseqServ, updateseqPlay, confirmById,
     updatepontProv, updatepontTotal, updatepontAtual, updatehora, findRankAtual, findRankTotal,
-    updateCoin, updateSenha
+    updateCoin, updateSenha, updatesenhaTokenReset, updatesenhaTokenExpire
 }

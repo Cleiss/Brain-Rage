@@ -1,4 +1,5 @@
 import usersService from "../services/users.service.js"
+import crypto from 'crypto'
 import bcrypt from "bcrypt"
 import nodemailer from 'nodemailer'
 import dotenv from "dotenv"
@@ -98,7 +99,7 @@ const updateUser = async (req, res) => {
     }
 }
 
-const updateSenha = async (req, res) => {
+const solicitaLink = async (req, res) => {
     try {
 
         const email = req.body
@@ -109,28 +110,20 @@ const updateSenha = async (req, res) => {
         const user = await usersService.findUserByEmail(email)
 
         if (!user) {
-            return res.status(400)
+            res.status(400).send({ message: "Usuário não encontrado." })
         }
 
-        const id = user._id
+        const id = user.id
 
-        function gerarSenha(tamanho) {
-            let resultado = '';
-            const caracteres = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#$%&?!';
+        const token = crypto.randomBytes(20).toString('hex')
 
-            for (let i = 0; i < tamanho; i++) {
-                resultado += caracteres.charAt(Math.floor(Math.random() * caracteres.length));
-            }
+        const now = new Date()
+        now.setHours(now.getHours() + 1)
 
-            return resultado;
-        }
+        await usersService.updatesenhaTokenReset(id, token)
+        await usersService.updatesenhaTokenExpire(id, now)
 
-        const novasenha = gerarSenha(7)
-
-        const senha = await bcrypt.hash(novasenha, 10)
-
-        await usersService.updateSenha(id, senha)
-        res.send(user)
+        res.status(201).send({ user })
 
         const carteiro = nodemailer.createTransport({
             host: "smtp.gmail.com",
@@ -142,21 +135,48 @@ const updateSenha = async (req, res) => {
             },
         });
 
-        (async () => {
-            const info = await carteiro.sendMail({
+        const link = process.env.BASEURL
+
+        //(async () => {
+            const info = /*await*/ carteiro.sendMail({
                 from: 'MemoCor <memocor.play@gmail.com>',
                 to: `${user.email}`,
                 subject: 'Solicitação de Nova Senha',
-                html: `<html><body>
+                html: `<body>
+                    <h1>🔐 Sistema de recuperação de senha 🔐</h1>
+                    <p>Prezado(a) bom dia, boa tarde, boa noite ! Esse e-mail é automatico então por favor, não responda.</p>
+                    <P>Esqueceu a senha ? Não se preocupe, utilize este link: 👉 ${link}?token=${token}&id=${id} 👈</P>
 
-                        <h1>Sua nova senha ${novasenha} chegou!</h1>
+                    <h2>Dicas</h2>
+                    <p> - O token tem um prazo de duas horas para ser ultilizado. Sendo ultrapassado, será necessário fazer uma nova solicitação 🕑</p>
+                    <p> - Sua senha é pessoal e não pode ser compartilhada 🤫</p>
+                    <p> - Para alterar a senha insira o token recebido no campo código no formulário 📜</p>
 
-                        </body></html>`,
-                text: 'testando envio de email pelo node'
+                    <b><h4>Atenciosamente</h4>
+                        <h4>Equipe de suporte 💻</h4></b>
+                </body>`
             });
 
-            console.log("Message sent:", info.messageId);
-        })();
+            //console.log("Message sent:", info.messageId);
+        //})() // async/await utilizado para certificar de que a msg foi enviada através do console.log() 
+
+        /*function gerarSenha(tamanho) {
+        let resultado = '';
+        const caracteres = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#$%&?!';
+
+        for (let i = 0; i < tamanho; i++) {
+            resultado += caracteres.charAt(Math.floor(Math.random() * caracteres.length));
+        }
+
+        return resultado;
+    }
+
+    const novasenha = gerarSenha(7)
+
+    const senha = await bcrypt.hash(novasenha, 10)
+
+    await usersService.updateSenha(id, senha)
+    res.send(user)*/
     }
     catch (erro) {
         console.log(erro)
@@ -164,4 +184,4 @@ const updateSenha = async (req, res) => {
 }
 
 
-export default { createUser, findAllUsers, findUserById, updateUser, updateSenha }
+export default { createUser, findAllUsers, findUserById, updateUser, solicitaLink }
