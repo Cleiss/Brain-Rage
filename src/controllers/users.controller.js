@@ -62,7 +62,6 @@ const findUserById = async (req, res) => {
 }
 
 const updateUser = async (req, res) => {
-
     try {
 
         const id = req.userId
@@ -135,29 +134,19 @@ const solicitaLink = async (req, res) => {
             },
         });
 
-        const link = process.env.BASEURL
+        const link = `${process.env.BASEURL}/resetsenha?token=${token}&id=${id}`
 
         //(async () => {
-            const info = /*await*/ carteiro.sendMail({
-                from: 'MemoCor <memocor.play@gmail.com>',
-                to: `${user.email}`,
-                subject: 'Solicitação de Nova Senha',
-                html: `<body>
-                    <h1>🔐 Sistema de recuperação de senha 🔐</h1>
-                    <p>Prezado(a) bom dia, boa tarde, boa noite ! Esse e-mail é automatico então por favor, não responda.</p>
-                    <P>Esqueceu a senha ? Não se preocupe, utilize este link: 👉 ${link}?token=${token}&id=${id} 👈</P>
-
-                    <h2>Dicas</h2>
-                    <p> - O token tem um prazo de duas horas para ser ultilizado. Sendo ultrapassado, será necessário fazer uma nova solicitação 🕑</p>
-                    <p> - Sua senha é pessoal e não pode ser compartilhada 🤫</p>
-                    <p> - Para alterar a senha insira o token recebido no campo código no formulário 📜</p>
-
-                    <b><h4>Atenciosamente</h4>
-                        <h4>Equipe de suporte 💻</h4></b>
+        const info = /*await*/ carteiro.sendMail({
+            from: 'MemoCor <memocor.play@gmail.com>',
+            to: `${user.email}`,
+            subject: 'Solicitação de Nova Senha',
+            html: `<body>
+                    <h1>Aqui está seu link para troca de senha: ${link}</h1>
                 </body>`
-            });
+        });
 
-            //console.log("Message sent:", info.messageId);
+        //console.log("Message sent:", info.messageId);
         //})() // async/await utilizado para certificar de que a msg foi enviada através do console.log() 
 
         /*function gerarSenha(tamanho) {
@@ -183,5 +172,43 @@ const solicitaLink = async (req, res) => {
     }
 }
 
+const resetSenha = async (req, res) => {
 
-export default { createUser, findAllUsers, findUserById, updateUser, solicitaLink }
+    try {
+
+        const token = req.params.token
+        const id = req.params.id
+
+        const user = await usersService.findUserById(id)
+
+        if (!user) {
+            return res.status(400).send({ message: "Usuário não encontrado." })
+        }
+
+        if (token !== user.senhaTokenReset) {
+            console.log('é diferente')
+        }
+
+        const now = new Date()
+
+        if (now > user.senhaTokenExpire) {
+
+            return res.status(400).send({ message: "Token expirado." })
+
+        }
+
+        user.senha = req.body.senha
+
+        await user.save()
+
+        res.status(201).send(req.params)
+
+    }
+    catch (erro) {
+        console.log(erro)
+    }
+
+}
+
+
+export default { createUser, findAllUsers, findUserById, updateUser, solicitaLink, resetSenha }

@@ -25,6 +25,7 @@ router.get("/confirm", authMidd, validId, validUser, confgame.confirmgame)
 router.patch("/resetseq", authMidd, validId, validUser, seqController.resetSeq)
 router.patch("/updtficha", authMidd, validId, validUser, gameController.Fichas)
 router.post("/solicitaLink", usersController.solicitaLink)
+router.post("/resetsenha/:token/:id", usersController.resetSenha)
 
 
 export default router
