@@ -117,7 +117,7 @@ const solicitaLink = async (req, res) => {
         const token = crypto.randomBytes(20).toString('hex')
 
         const now = new Date()
-        now.setHours(now.getHours() + 1)
+        now.setMinutes(now.getMinutes() + 10)
 
         await usersService.updatesenhaTokenReset(id, token)
         await usersService.updatesenhaTokenExpire(id, now)
@@ -142,8 +142,13 @@ const solicitaLink = async (req, res) => {
             to: `${user.email}`,
             subject: 'Solicitação de Nova Senha',
             html: `<body>
-                    <h1>Aqui está seu link para troca de senha: ${link}</h1>
-                </body>`
+                    <p>
+                    Olá! Você está recebendo o link para trocar a senha.<br/>
+                    O link expira em 10 minutos, seja rápido.                    
+                    </p><br/>
+                    <h5>${link}</h5>
+                </body>`,
+            text: `Olá! Você está recebendo o link para trocar a senha. Expira em 10 minutos, não demore. ${link}`
         });
 
         //console.log("Message sent:", info.messageId);
@@ -181,27 +186,55 @@ const resetSenha = async (req, res) => {
 
         const user = await usersService.findUserById(id)
 
+        const now = new Date()
+
         if (!user) {
             return res.status(400).send({ message: "Usuário não encontrado." })
         }
 
         if (token !== user.senhaTokenReset) {
-            console.log('é diferente')
-        }
 
-        const now = new Date()
+            return res.status(400).send({ message: "Link inválido." })
+        }
 
         if (now > user.senhaTokenExpire) {
 
-            return res.status(400).send({ message: "Token expirado." })
-
+            return res.status(400).send({ message: "Link expirado. Solicite novamente." })
         }
 
         user.senha = req.body.senha
 
+        user.senhaTokenReset = null
+
+        await usersService.updateToken(id, user.senhaTokenReset)
+
         await user.save()
 
-        res.status(201).send(req.params)
+        const carteiro = nodemailer.createTransport({
+            host: "smtp.gmail.com",
+            port: 465,
+            secure: true, // true for 465, false for other ports
+            auth: {
+                user: process.env.EMAIL,
+                pass: process.env.PASS
+            },
+        });
+
+        //(async () => {
+        const info = /*await*/ carteiro.sendMail({
+            from: 'MemoCor <memocor.play@gmail.com>',
+            to: `${user.email}`,
+            subject: 'Alteração de Senha',
+            html: `<body>
+                    <p>
+                    Olá! Você está recebendo este email devido a alteração da senha de sua conta.<br/>
+                    Caso não tenha executado essa ação, solicite a troca da senha imediatamente.                    
+                    </p><br/>
+                </body>`,
+            text: 'Olá! Você está recebendo este email devido a alteração da senha de sua conta. Caso não tenha executado essa ação, solicite a troca da senha imediatamente.'
+        });
+
+        return res.status(201).send({message: "Senha alterada com sucesso."})
 
     }
     catch (erro) {

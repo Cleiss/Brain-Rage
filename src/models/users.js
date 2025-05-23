@@ -55,11 +55,9 @@ const UserSchema = new mongoose.Schema(
         },
         senhaTokenReset: {
             type: String,
-            
         },
         senhaTokenExpire: {
             type: Date,
-            
         }
     },
     { timestamps: true }
