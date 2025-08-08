@@ -134,7 +134,10 @@ const solicitaLink = async (req, res) => {
             },
         });
 
+        // const localport = "http://localhost:5173"
+
         const link = `${process.env.BASEURL}/resetsenha?token=${token}&id=${id}`
+                    // `${localport}/resetasenha?token=${token}&id=${id}`
 
         //(async () => {
         const info = /*await*/ carteiro.sendMail({
@@ -199,7 +202,7 @@ const resetSenha = async (req, res) => {
 
         if (now > user.senhaTokenExpire) {
 
-            return res.status(400).send({ message: "Link expirado. Solicite novamente." })
+            return res.status(400).send({ message: "Link expirado." })
         }
 
         user.senha = req.body.senha
