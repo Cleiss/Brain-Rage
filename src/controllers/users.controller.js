@@ -136,7 +136,7 @@ const solicitaLink = async (req, res) => {
 
         // const localport = "http://localhost:5173"
 
-        const link = `${process.env.BASEURL}/resetsenha?token=${token}&id=${id}`
+        const link = `${process.env.BASEURL}/resetasenha?token=${token}&id=${id}`
                     // `${localport}/resetasenha?token=${token}&id=${id}`
 
         //(async () => {
