@@ -61,7 +61,7 @@ const findUserById = async (req, res) => {
     }
 }
 
-const updateUser = async (req, res) => {
+const updateUser = async (req, res) => { /*criar uma func para senha e username separadas e deletar esta*/
     try {
 
         const id = req.userId
@@ -71,13 +71,13 @@ const updateUser = async (req, res) => {
 
         if (!username && !senha) {
 
-            res.status(400).send({ message: "Preencha pelo menos um campo." })
+            return res.status(400).send("Preencha pelo menos um campo")
         }
 
         const user = await usersService.findUserById(id)
 
         if (!id || !user) {
-            return res.status(401).send({ message: 'Solicitação não permitida.' })
+            return res.status(401).send({ message: 'Solicitação não permitida' })
         }
 
         if (username.length >= 3 && username.length <= 10) {
@@ -85,9 +85,9 @@ const updateUser = async (req, res) => {
                 id,
                 username
             )
-        }
 
-        console.log(username.length)
+        } else {return res.status(400).send("Apelido deve ter entre 3 e 10 caracteres")}
+
 
         if (senha.length >= 3) {
             await usersService.updateUserSenha(
@@ -97,9 +97,10 @@ const updateUser = async (req, res) => {
             user.senha = senha
 
             await user.save()
+            
         }
 
-        return res.status(201).send({ message: "Jogador atualizado." })
+        return res.status(201).send("Jogador atualizado com sucesso!")
     }
     catch (err) {
         return res.status(500).send({ message: err.message })
