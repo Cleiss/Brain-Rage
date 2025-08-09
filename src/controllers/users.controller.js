@@ -80,7 +80,7 @@ const updateUser = async (req, res) => {
             return res.status(401).send({ message: 'Solicitação não permitida.' })
         }
 
-        if (username.length >= 3 && username.length <= 11 ) {
+        if (username.length >= 3 && username.length <= 10) {
             await usersService.updateUserUsername(
                 id,
                 username
