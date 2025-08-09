@@ -18,8 +18,8 @@ const findUserById = (id) => UserMemo.findById(id)
 
 const findUserByEmail = (email) => UserMemo.findOne(email)
 
-const updateSenha = (id, senha) =>
-    UserMemo.findByIdAndUpdate({ _id: id }, { senha })
+// const updateSenha = (id, senha) =>
+//     UserMemo.findByIdAndUpdate({ _id: id }, { senha })
 
 const updatesenhaTokenReset = (id, senhaTokenReset) =>
     UserMemo.findByIdAndUpdate({ _id: id }, { senhaTokenReset })
@@ -30,12 +30,11 @@ const updatesenhaTokenExpire = (id, senhaTokenExpire) =>
 const updateToken = (id, senhaTokenReset) =>
     UserMemo.findByIdAndUpdate({ _id: id }, { senhaTokenReset })
 
-const updateUser = (id, nome, sobrenome, email, username,
-    senha, pix) => UserMemo.findOneAndUpdate({ _id: id }, {
-        nome, sobrenome, email, username,
-        senha, pix
-    }
-    )
+const updateUserUsername = (id, username) =>
+    UserMemo.findByIdAndUpdate({ _id: id }, { username})
+
+const updateUserSenha = (id, senha) =>
+    UserMemo.findByIdAndUpdate({ _id: id }, { senha })
 
 const updateCoin = (id, moedas) =>
     UserMemo.findByIdAndUpdate({ _id: id }, { moedas })
@@ -63,7 +62,7 @@ const confirmById = (id) => UserMemo.findById(id)
 
 export default {
     createUser, findAllUsers, findUserById, findUserByEmail,
-    updateUser, updateseqServ, updateseqPlay, confirmById,
+    updateUserUsername, updateUserSenha, updateseqServ, updateseqPlay, confirmById,
     updatepontProv, updatepontTotal, updatepontAtual, updatehora, findRankAtual, findRankTotal,
     updateCoin, updateSenha, updatesenhaTokenReset, updatesenhaTokenExpire, updateToken
 }

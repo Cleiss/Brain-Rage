@@ -66,11 +66,10 @@ const updateUser = async (req, res) => {
 
         const id = req.userId
 
-        const { nome, sobrenome, email, username,
-            senha, pix } = req.body
+        const username = req.body.username
+        const senha = req.body.senha
 
-        if (!nome && !sobrenome && !email && !username
-            && !senha && !pix) {
+        if (!username && !senha) {
 
             res.status(400).send({ message: "Preencha pelo menos um campo." })
         }
@@ -81,17 +80,24 @@ const updateUser = async (req, res) => {
             return res.status(401).send({ message: 'Solicitação não permitida.' })
         }
 
-        await usersService.updateUser(
-            id,
-            nome,
-            sobrenome,
-            email,
-            username,
-            senha,
-            pix
-        )
+        if (username.length >= 3) {
+            await usersService.updateUserUsername(
+                id,
+                username
+            )
+        }
 
-        return res.status(201).send({ message: "Dados de usuário atualizados." })
+        if (senha.length >= 3) {
+            await usersService.updateUserSenha(
+                id,
+                senha
+            )
+            user.senha = senha
+
+            await user.save()
+        }
+
+        return res.status(201).send({ message: "Jogador atualizado." })
     }
     catch (err) {
         return res.status(500).send({ message: err.message })
@@ -134,10 +140,10 @@ const solicitaLink = async (req, res) => {
             },
         });
 
-        // const localport = "http://localhost:5173"
+        const localport = "http://localhost:5173"
 
-        const link = `${process.env.BASEURL}/resetasenha?token=${token}&id=${id}`
-                    // `${localport}/resetasenha?token=${token}&id=${id}`
+        const link = //`${process.env.BASEURL}/resetasenha?token=${token}&id=${id}`
+        `${localport}/resetasenha?token=${token}&id=${id}`
 
         //(async () => {
         const info = /*await*/ carteiro.sendMail({
@@ -237,7 +243,7 @@ const resetSenha = async (req, res) => {
             text: 'Olá! Você está recebendo este email devido a alteração da senha de sua conta. Caso não tenha executado essa ação, solicite a troca da senha imediatamente.'
         });
 
-        return res.status(201).send({message: "Senha alterada com sucesso."})
+        return res.status(201).send({ message: "Senha alterada com sucesso." })
 
     }
     catch (erro) {
