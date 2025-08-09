@@ -18,8 +18,8 @@ const findUserById = (id) => UserMemo.findById(id)
 
 const findUserByEmail = (email) => UserMemo.findOne(email)
 
-// const updateSenha = (id, senha) =>
-//     UserMemo.findByIdAndUpdate({ _id: id }, { senha })
+const updateSenha = (id, senha) =>
+    UserMemo.findByIdAndUpdate({ _id: id }, { senha })
 
 const updatesenhaTokenReset = (id, senhaTokenReset) =>
     UserMemo.findByIdAndUpdate({ _id: id }, { senhaTokenReset })
