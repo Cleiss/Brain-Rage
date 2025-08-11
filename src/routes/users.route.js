@@ -16,7 +16,8 @@ router.get("/rankingtotal", authMidd, validId, validUser, rankController.ranking
 
 
 router.get("/loc", authMidd, validId, validUser, usersController.findUserById)
-router.patch("/updt/user", authMidd, validId, validUser, usersController.updateUser)
+router.patch("/updt/username", authMidd, validId, validUser, usersController.updateUsername)
+router.patch("/updt/userpass", authMidd, validId, validUser, usersController.updateUserPass)
 
 router.patch("/updt/cor", authMidd, validId, validUser, gameController.criarcor)
 router.patch("/updt/playcor", authMidd, validId, validUser, playController.playcor)

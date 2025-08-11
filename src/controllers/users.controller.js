@@ -61,23 +61,22 @@ const findUserById = async (req, res) => {
     }
 }
 
-const updateUser = async (req, res) => { /*criar uma func para senha e username separadas e deletar esta*/
+const updateUsername = async (req, res) => { /*criar uma func para senha e username separadas e deletar esta*/
     try {
 
         const id = req.userId
 
         const username = req.body.username
-        const senha = req.body.senha
 
-        if (!username && !senha) {
+        if (!username) {
 
-            return res.status(400).send("Preencha pelo menos um campo")
+            return res.status(400).send("Preencha o campo")
         }
 
         const user = await usersService.findUserById(id)
 
         if (!id || !user) {
-            return res.status(401).send({ message: 'Solicitação não permitida' })
+            return res.status(401).send('Solicitação não permitida')
         }
 
         if (username.length >= 3 && username.length <= 10) {
@@ -88,8 +87,32 @@ const updateUser = async (req, res) => { /*criar uma func para senha e username 
 
         } else {return res.status(400).send("Apelido deve ter entre 3 e 10 caracteres")}
 
+        return res.status(201).send("Jogador atualizado com sucesso!")
+    }
+    catch (err) {
+        return res.status(500).send('Este apelido já está em uso')
+    }
+}
 
-        if (senha.length >= 3) {
+const updateUserPass = async (req, res) => {
+    try {
+
+        const id = req.userId
+
+        const senha = req.body.senha
+
+        if (!senha) {
+
+            return res.status(400).send("Preencha o campo")
+        }
+
+        const user = await usersService.findUserById(id)
+
+        if (!id || !user) {
+            return res.status(401).send('Solicitação não permitida')
+        }
+
+        if (senha.length >= 7) {
             await usersService.updateUserSenha(
                 id,
                 senha
@@ -100,10 +123,12 @@ const updateUser = async (req, res) => { /*criar uma func para senha e username 
             
         }
 
+        else {return res.status(400).send("Senha deve ter mais de 7 caracteres")}
+
         return res.status(201).send("Jogador atualizado com sucesso!")
     }
     catch (err) {
-        return res.status(500).send({ message: err.message })
+        return res.status(500).send('err.message')
     }
 }
 
@@ -256,4 +281,4 @@ const resetSenha = async (req, res) => {
 }
 
 
-export default { createUser, findAllUsers, findUserById, updateUser, solicitaLink, resetSenha }
+export default { createUser, findAllUsers, findUserById, updateUsername, updateUserPass, solicitaLink, resetSenha }
