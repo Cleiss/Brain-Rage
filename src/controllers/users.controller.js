@@ -226,17 +226,17 @@ const resetSenha = async (req, res) => {
         const now = new Date()
 
         if (!user) {
-            return res.status(400).send({ message: "Usuário não encontrado." })
+            return res.status(400).send("Usuário não encontrado")
         }
 
         if (token !== user.senhaTokenReset) {
 
-            return res.status(400).send({ message: "Link inválido." })
+            return res.status(400).send("Link inválido")
         }
 
         if (now > user.senhaTokenExpire) {
 
-            return res.status(400).send({ message: "Link expirado." })
+            return res.status(400).send("Link expirado")
         }
 
         user.senha = req.body.senha
@@ -271,7 +271,7 @@ const resetSenha = async (req, res) => {
             text: 'Olá! Você está recebendo este email devido a alteração da senha de sua conta. Caso não tenha executado essa ação, solicite a troca da senha imediatamente.'
         });
 
-        return res.status(201).send({ message: "Senha alterada com sucesso." })
+        return res.status(201).send("Senha alterada com sucesso")
 
     }
     catch (erro) {
