@@ -138,12 +138,12 @@ const solicitaLink = async (req, res) => {
         const email = req.body
 
         if (!email) {
-            return res.status(400)
+            return res.status(400).send('Email não cadastrado')
         }
         const user = await usersService.findUserByEmail(email)
 
         if (!user) {
-            res.status(400).send({ message: "Usuário não encontrado." })
+            res.status(400).send("Usuário não encontrado")
         }
 
         const id = user.id
