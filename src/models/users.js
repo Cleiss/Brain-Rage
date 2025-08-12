@@ -45,7 +45,7 @@ const UserSchema = new mongoose.Schema(
             pontProv: {
                 type: Number
             },
-            AtualizadoEm: {type: Date, default: Date.now}
+            AtualizadoEm: { type: Date, default: Date.now }
         },
         seqServ: {
             type: Array
@@ -63,6 +63,7 @@ const UserSchema = new mongoose.Schema(
     { timestamps: true }
 )
 
+
 UserSchema.pre("save", async function (next) {
     this.senha = await bcrypt.hash(this.senha, 10)
 
@@ -74,5 +75,6 @@ UserSchema.pre("save", async function (next) {
 })
 
 const UserMemo = mongoose.model("UserMemo", UserSchema)
+
 
 export default UserMemo
