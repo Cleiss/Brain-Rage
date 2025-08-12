@@ -50,7 +50,7 @@ const confirmgame = async (req, res) => {
                 await usersService.updatepontProv(id, prov)
 
                 const patual = pontProv + 1
-                if (patual >= 10 && patual >= pontAtual && patual <= 25) {
+                if (patual >= 5 && patual >= pontAtual && patual <= 25) {
                     await usersService.updatepontAtual(id, patual)
                 }
                 return res.status(201).send(segjogo)

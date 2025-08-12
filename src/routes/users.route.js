@@ -13,6 +13,7 @@ router.post("/create", /*middleware*/ usersController.createUser)
 router.get("/", usersController.findAllUsers)
 router.get("/ranking", authMidd, validId, validUser, rankController.rankingAtual)
 router.get("/rankingtotal", authMidd, validId, validUser, rankController.rankingTotal)
+router.get("/timereset", authMidd, validId, validUser, usersController.resetpontAtual)
 
 
 router.get("/loc", authMidd, validId, validUser, usersController.findUserById)

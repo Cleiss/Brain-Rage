@@ -5,6 +5,8 @@ const rankingAtual = async (req, res) => {
 
         const rank = await usersService.findRankAtual()
 
+        console.log(rank)
+
         return res.status(201).send(rank)
     }
     catch(erro) {

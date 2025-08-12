@@ -61,7 +61,7 @@ const findUserById = async (req, res) => {
     }
 }
 
-const updateUsername = async (req, res) => { /*criar uma func para senha e username separadas e deletar esta*/
+const updateUsername = async (req, res) => {
     try {
 
         const id = req.userId
@@ -85,7 +85,7 @@ const updateUsername = async (req, res) => { /*criar uma func para senha e usern
                 username
             )
 
-        } else {return res.status(400).send("Apelido deve ter entre 3 e 10 caracteres")}
+        } else { return res.status(400).send("Apelido deve ter entre 3 e 10 caracteres") }
 
         return res.status(201).send("Jogador atualizado com sucesso!")
     }
@@ -120,12 +120,12 @@ const updateUserPass = async (req, res) => {
             user.senha = senha
 
             await user.save()
-            
+
         }
 
-        else {return res.status(400).send("Senha deve ter mais de 7 caracteres")}
+        else { return res.status(400).send("Senha deve ter mais de 7 caracteres") }
 
-        return res.status(201).send("Jogador atualizado com sucesso!")
+        return res.status(201).send("Senha atualizada com sucesso!")
     }
     catch (err) {
         return res.status(500).send('err.message')
@@ -280,5 +280,64 @@ const resetSenha = async (req, res) => {
 
 }
 
+const resetpontAtual = async (req, res) => {
 
-export default { createUser, findAllUsers, findUserById, updateUsername, updateUserPass, solicitaLink, resetSenha }
+    try {
+
+        const id = req.userId
+
+        const user = await usersService.findUserById(id)
+
+        if (!id || !user) {
+            return res.status(401).send('Solicitação não permitida')
+        }
+
+        const users = await usersService.findAllUsers()
+
+        let hoje = new Date()
+        const hojedia = hoje.getMinutes()
+        const diaPont = 47 //user.Score.AtualizadoEm.getMinutes()
+        const pAtual = 0
+        let idUsers = []
+
+        users.forEach((usuario) => {
+
+            const id = usuario.id
+
+            idUsers.push(id)
+        })
+
+        //console.log(user.Score)
+
+        //console.log(idUsers.length)
+
+        // for (let i = 0; i < idUsers.length; i++) {
+        //     //console.log(String(idUsers[i]))
+        //      await usersService.updatepontAtual(String(idUsers[i]), pAtual)
+        // }
+
+        const regressiva = hoje - diaPont
+
+
+        // if (hojedia == diaPont) {
+
+            // for (let i = 0; i < idUsers.length; i++) {
+            //     //console.log(String(idUsers[i]))
+            //     await usersService.updatepontAtual(String(idUsers[i]), pAtual)
+            // }
+
+        //     console.log(user.Score.pontAtual)
+
+        // }
+        // else { console.log("pontuação válida") }
+
+        return res.status(201).send("Senha atualizada com sucesso!")
+
+    }
+    catch (erro) {
+        console.log(erro)
+    }
+}
+
+
+export default { createUser, findAllUsers, findUserById, updateUsername, updateUserPass, solicitaLink, resetSenha, resetpontAtual }
