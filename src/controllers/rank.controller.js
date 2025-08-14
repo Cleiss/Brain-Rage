@@ -29,8 +29,6 @@ const rankingAtual = async (req, res) => {
 
         }
 
-        //console.log(rankdiario[0])
-
         for (let i = 0; i < rank.length; i++) {
 
             if (hojedia != rank[i].Score.AtualizadoEm.getDate() ||
@@ -45,7 +43,10 @@ const rankingAtual = async (req, res) => {
 
         const rankAtt = await usersService.findRankAtual()
 
-        //console.log(rankAtt)
+        // console.log(rankdiario[0].Rank[0].Score.pontAtual)
+        // console.log(rankdiario[0].Rank[0].username)
+
+        //console.log(rankdiario)
 
         return res.status(201).send(rankAtt)
 
