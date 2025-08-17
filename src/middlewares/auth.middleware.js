@@ -48,7 +48,7 @@ export const authMidd = (req, res, next) => {
     }
     catch (err) {
 
-        return res.status(500).send({ message: 'erro 500 authmid' })
+        return res.status(500).send({ message: err })
     }
 
 

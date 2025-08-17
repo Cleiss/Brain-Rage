@@ -12,6 +12,8 @@ const rankingAtual = async (req, res) => {
 
         const rankdiario = await rankdiarioService.findAllRanks()
 
+        console.log(user.Score)
+
         if (!id || !user) {
             return res.status(401).send('Solicitação não permitida')
         }

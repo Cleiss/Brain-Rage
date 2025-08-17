@@ -12,7 +12,7 @@ const confirmgame = async (req, res) => {
             return res.status(401).send({ message: 'Solicitação não autorizada.' })
         }
 
-        const compCor = 25
+        const compCor = 7
         const venceu = [0]
         const segjogo = [1]
         const perdeu = [2]
@@ -49,11 +49,26 @@ const confirmgame = async (req, res) => {
                 const prov = pontProv + 1
                 await usersService.updatepontProv(id, prov)
 
-                const patual = pontProv + 1
-                if (patual >= 5 && patual >= pontAtual && patual <= 25) {
-                    await usersService.updatepontAtual(id, patual)
+                if (prov <= 7) {
+                    return res.status(201).send(segjogo)
                 }
-                return res.status(201).send(segjogo)
+
+                const patual = pontProv + 1
+
+                //await usersService.updatepontAtual(id, patual)
+
+                // const userAtt = await usersService.findUserById(id)
+
+                // const pontAtualAtt = userAtt.Score.pontAtual
+
+                // const ptotal = pontAtual + pontTotal
+
+                // if (user.Score.AtualizadoEm.getDate() != 15) {
+                //     await usersService.updatepontTotal(id, ptotal)
+                // }
+
+                //console.log(user.Score)
+
             }
         }
         else {
@@ -64,11 +79,27 @@ const confirmgame = async (req, res) => {
             const SeqPlay = []
             await usersService.updateseqPlay(id, SeqPlay)
 
-            const ptotal = pontAtual + pontTotal
-            if (ptotal > pontTotal && pontProv >= pontAtual) {
-                await usersService.updatepontTotal(id, ptotal)
+            //const resp = 0
+
+            //await usersService.updatepontAtual(id, res)
+
+            if (pontProv >= 3 && pontProv >= pontAtual) {
+                await usersService.updatepontAtual(id, pontProv)
                 await usersService.updatehora(id, tempo)
             }
+
+            const ptotal = pontAtual + pontTotal
+
+            if (pontAtual == 0) {
+                await usersService.updatepontTotal(id, ptotal)
+            }
+
+            // if (user.Score.AtualizadoEm.getDate() + 6 != tempo.getDate() ||
+            //     user.Score.AtualizadoEm.getMonth() != tempo.getMonth() ||
+            //     user.Score.AtualizadoEm.getFullYear() != tempo.getFullYear()
+            // ){
+            //     await usersService.updatepontTotal(id, ptotal)
+            // }
 
             const prov = 0
             await usersService.updatepontProv(id, prov)
