@@ -17,15 +17,15 @@ const confirmgame = async (req, res) => {
         const segjogo = [1]
         const perdeu = [2]
         const tempo = new Date()
-        const pontProv = user.Score.pontProv
-        const pontTotal = user.Score.pontTotal
-        const pontAtual = user.Score.pontAtual
+        const pontProv = user.Score.ScoreDiario.pontProv
+        const pontTotal = user.Score.ScoreTotal.pontTotal
+        const pontAtual = user.Score.ScoreDiario.pontAtual
 
         if (user.seqServ.length === user.SeqPlay.length &&
             user.seqServ.every((val, index) => val === user.SeqPlay[index])) {
             if (user.seqServ.length === compCor) {
 
-                await usersService.updatehora(id, tempo)
+                await usersService.updatetempodiario(id, tempo)
 
                 const seqServ = []
                 await usersService.updateseqServ(id, seqServ)
@@ -85,7 +85,7 @@ const confirmgame = async (req, res) => {
 
             if (pontProv >= 3 && pontProv >= pontAtual) {
                 await usersService.updatepontAtual(id, pontProv)
-                await usersService.updatehora(id, tempo)
+                await usersService.updatetempodiario(id, tempo)
             }
 
             const ptotal = pontAtual + pontTotal

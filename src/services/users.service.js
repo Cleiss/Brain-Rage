@@ -5,13 +5,13 @@ const createUser = (body) => UserMemo.create(body)
 const findAllUsers = () => UserMemo.find().sort({ _id: -1 })
 
 const findRankAtual = () => UserMemo.find().sort({
-    'Score.pontAtual': -1,
-    'Score.AtualizadoEm': -1
+    'Score.ScoreDiario.pontAtual': -1,
+    'Score.DiarioAtualizadoEm': -1
 }).limit(5)
 
 const findRankTotal = () => UserMemo.find().sort({
-    'Score.pontTotal': -1,
-    'Score.AtualizadoEm': -1
+    'Score.ScoreTotal.pontTotal': -1,
+    'Score.TotalAtualizadoEm': -1
 }).limit(5)
 
 const findUserById = (id) => UserMemo.findById(id)
@@ -46,16 +46,19 @@ const updateseqPlay = (id, SeqPlay) =>
     UserMemo.findByIdAndUpdate({ _id: id }, { SeqPlay })
 
 const updatepontProv = (id, pontProv) =>
-    UserMemo.findByIdAndUpdate({ _id: id }, { $set: { 'Score.pontProv': pontProv } })
-
-const updatepontTotal = (id, pontTotal) =>
-    UserMemo.findByIdAndUpdate({ _id: id }, { $set: { 'Score.pontTotal': pontTotal } })
+    UserMemo.findByIdAndUpdate({ _id: id }, { $set: { 'Score.ScoreDiario.pontProv': pontProv } })
 
 const updatepontAtual = (id, pontAtual) =>
-    UserMemo.findByIdAndUpdate({ _id: id }, { $set: { 'Score.pontAtual': pontAtual } })
+    UserMemo.findByIdAndUpdate({ _id: id }, { $set: { 'Score.ScoreDiario.pontAtual': pontAtual } })
 
-const updatehora = (id, AtualizadoEm) =>
-    UserMemo.findByIdAndUpdate({ _id: id }, { $set: { 'Score.AtualizadoEm': AtualizadoEm } })
+const updatetempodiario = (id, DiarioAtualizadoEm) =>
+    UserMemo.findByIdAndUpdate({ _id: id }, { $set: { 'Score.ScoreDiario.DiarioAtualizadoEm': DiarioAtualizadoEm } })
+
+const updatepontTotal = (id, pontTotal) =>
+    UserMemo.findByIdAndUpdate({ _id: id }, { $set: { 'Score.ScoreTotal.pontTotal': pontTotal } })
+
+const updatetempototal = (id, TotalAtualizadoEm) =>
+    UserMemo.findByIdAndUpdate({ _id: id }, { $set: { 'Score.ScoreTotal.TotalAtualizadoEm': TotalAtualizadoEm } })
 
 const confirmById = (id) => UserMemo.findById(id)
 
@@ -63,6 +66,6 @@ const confirmById = (id) => UserMemo.findById(id)
 export default {
     createUser, findAllUsers, findUserById, findUserByEmail,
     updateUserUsername, updateUserSenha, updateseqServ, updateseqPlay, confirmById,
-    updatepontProv, updatepontTotal, updatepontAtual, updatehora, findRankAtual, findRankTotal,
+    updatepontProv, updatepontTotal, updatepontAtual, updatetempodiario, updatetempototal, findRankAtual, findRankTotal,
     updateCoin, updateSenha, updatesenhaTokenReset, updatesenhaTokenExpire, updateToken
 }

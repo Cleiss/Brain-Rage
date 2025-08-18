@@ -33,12 +33,12 @@ const rankingAtual = async (req, res) => {
 
         for (let i = 0; i < rank.length; i++) {
 
-            if (hojedia != rank[i].Score.AtualizadoEm.getDate() ||
-                hojemes != rank[i].Score.AtualizadoEm.getMonth() ||
-                hojeano != rank[i].Score.AtualizadoEm.getFullYear()) {
+            if (hojedia != rank[i].Score.ScoreDiario.DiarioAtualizadoEm.getDate() ||
+                hojemes != rank[i].Score.ScoreDiario.DiarioAtualizadoEm.getMonth() ||
+                hojeano != rank[i].Score.ScoreDiario.DiarioAtualizadoEm.getFullYear()) {
 
                 await usersService.updatepontAtual(rank[i].id, pAtual)
-                await usersService.updatehora(rank[i].id, hoje)
+                await usersService.updatetempodiario(rank[i].id, hoje)
 
             }
         }

@@ -36,16 +36,21 @@ const UserSchema = new mongoose.Schema(
             type: Number
         },
         Score: {
-            pontAtual: {
-                type: Number
+            ScoreDiario: {
+                pontAtual: {
+                    type: Number
+                },
+                pontProv: {
+                    type: Number
+                },
+                DiarioAtualizadoEm: { type: Date, default: Date.now }
             },
-            pontTotal: {
-                type: Number
-            },
-            pontProv: {
-                type: Number
-            },
-            AtualizadoEm: { type: Date, default: Date.now }
+            ScoreTotal: {
+                pontTotal: {
+                    type: Number
+                },
+                TotalAtualizadoEm: { type: Date, default: Date.now }
+            }
         },
         seqServ: {
             type: Array
