@@ -39,6 +39,25 @@ const confirmgame = async (req, res) => {
                 DiariaAcum.push(pontProv + 1)
                 await usersService.updateDiariaAcum(id, DiariaAcum)
 
+                const userAtt = await usersService.findUserById(id)
+
+                const pont_acum = userAtt.Score.ScoreDiario.DiariaAcum
+
+                const pont_ord = pont_acum.sort(function (a, b) {
+                    return b - a
+                })
+
+                let Med_Pont = (Math.round((pont_ord[0] + pont_ord[1] + pont_ord[2]) / 5))
+
+                if (pont_acum.length < 3) {
+                    Med_Pont = 0
+                }
+
+                const NovaPontTotal = Med_Pont + userAtt.Score.ScoreTotal.pontTotal
+
+                await usersService.updatepontTotal(id, NovaPontTotal)
+                await usersService.updatetempototal(id, tempo)
+
                 const prov = 0
                 await usersService.updatepontProv(id, prov)
 
@@ -67,8 +86,27 @@ const confirmgame = async (req, res) => {
 
             if (pontProv >= 3 && pontProv >= pontAtual) {
                 await usersService.updatepontAtual(id, pontProv)
-                await usersService.updatetempodiario(id, tempo)
                 await usersService.updateDiariaAcum(id, DiariaAcum)
+                await usersService.updatetempodiario(id, tempo)
+
+                const userAtt = await usersService.findUserById(id)
+
+                const pont_acum = userAtt.Score.ScoreDiario.DiariaAcum
+
+                const pont_ord = pont_acum.sort(function (a, b) {
+                    return b - a
+                })
+
+                let Med_Pont = (Math.round((pont_ord[0] + pont_ord[1] + pont_ord[2]) / 5))
+
+                if (pont_acum.length < 3) {
+                    Med_Pont = 0
+                }
+
+                const NovaPontTotal = Med_Pont + userAtt.Score.ScoreTotal.pontTotal
+
+                await usersService.updatepontTotal(id, NovaPontTotal)
+                await usersService.updatetempototal(id, tempo)
 
             }
 

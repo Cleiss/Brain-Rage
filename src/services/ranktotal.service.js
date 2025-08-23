@@ -1,4 +1,4 @@
-import UserRankTotal from "../models/rankdiario.js";
+import UserRankTotal from "../models/ranktotal.js";
 
 const createRankTotal = (Rank) => UserRankTotal.create(Rank)
 

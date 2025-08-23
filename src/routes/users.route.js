@@ -15,6 +15,7 @@ router.get("/", usersController.findAllUsers)
 router.get("/ranking", authMidd, validId, validUser, rankController.rankingAtual)
 router.get("/rankingtotal", authMidd, validId, validUser, rankController.rankingTotal)
 router.get("/ultvenc", authMidd, validId, validUser, ultVencController.ultVenc)
+router.get("/ultvencT", authMidd, validId, validUser, ultVencController.ultVencTotal)
 
 
 router.get("/loc", authMidd, validId, validUser, usersController.findUserById)
