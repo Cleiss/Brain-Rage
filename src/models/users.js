@@ -43,6 +43,9 @@ const UserSchema = new mongoose.Schema(
                 pontProv: {
                     type: Number
                 },
+                DiariaAcum: {
+                    type: Array
+                },
                 DiarioAtualizadoEm: { type: Date, default: Date.now }
             },
             ScoreTotal: {

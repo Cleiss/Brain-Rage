@@ -8,11 +8,11 @@ const rankingAtual = async (req, res) => {
 
         const user = await usersService.findUserById(id)
 
+        const usersRank = await usersService.findAllUsers()
+
         const rank = await usersService.findRankAtual()
 
         const rankdiario = await rankdiarioService.findAllRanks()
-
-        console.log(user.Score)
 
         if (!id || !user) {
             return res.status(401).send('Solicitação não permitida')
@@ -31,24 +31,17 @@ const rankingAtual = async (req, res) => {
 
         }
 
-        for (let i = 0; i < rank.length; i++) {
+        for (let i = 0; i < usersRank.length; i++) {
 
-            if (hojedia != rank[i].Score.ScoreDiario.DiarioAtualizadoEm.getDate() ||
-                hojemes != rank[i].Score.ScoreDiario.DiarioAtualizadoEm.getMonth() ||
-                hojeano != rank[i].Score.ScoreDiario.DiarioAtualizadoEm.getFullYear()) {
+            if (hojedia != usersRank[i].Score.ScoreDiario.DiarioAtualizadoEm.getDate()) {
 
-                await usersService.updatepontAtual(rank[i].id, pAtual)
-                await usersService.updatetempodiario(rank[i].id, hoje)
+                await usersService.updatepontAtual(usersRank[i].id, pAtual)
+                await usersService.updatetempodiario(usersRank[i].id, hoje)
 
             }
         }
 
         const rankAtt = await usersService.findRankAtual()
-
-        // console.log(rankdiario[0].Rank[0].Score.pontAtual)
-        // console.log(rankdiario[0].Rank[0].username)
-
-        //console.log(rankdiario)
 
         return res.status(201).send(rankAtt)
 
@@ -62,6 +55,8 @@ const rankingTotal = async (req, res) => {
     try {
 
         const ranktotal = await usersService.findRankTotal()
+
+        console.log(ranktotal)
 
         return res.status(201).send(ranktotal)
     }

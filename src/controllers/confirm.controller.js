@@ -18,8 +18,8 @@ const confirmgame = async (req, res) => {
         const perdeu = [2]
         const tempo = new Date()
         const pontProv = user.Score.ScoreDiario.pontProv
-        const pontTotal = user.Score.ScoreTotal.pontTotal
         const pontAtual = user.Score.ScoreDiario.pontAtual
+        const DiariaAcum = user.Score.ScoreDiario.DiariaAcum
 
         if (user.seqServ.length === user.SeqPlay.length &&
             user.seqServ.every((val, index) => val === user.SeqPlay[index])) {
@@ -33,11 +33,11 @@ const confirmgame = async (req, res) => {
                 const SeqPlay = []
                 await usersService.updateseqPlay(id, SeqPlay)
 
-                const ptotal = pontProv + pontTotal + 1
-                await usersService.updatepontTotal(id, ptotal)
-
                 const patual = pontProv + 1
                 await usersService.updatepontAtual(id, patual)
+
+                DiariaAcum.push(pontProv + 1)
+                await usersService.updateDiariaAcum(id, DiariaAcum)
 
                 const prov = 0
                 await usersService.updatepontProv(id, prov)
@@ -53,22 +53,6 @@ const confirmgame = async (req, res) => {
                     return res.status(201).send(segjogo)
                 }
 
-                const patual = pontProv + 1
-
-                //await usersService.updatepontAtual(id, patual)
-
-                // const userAtt = await usersService.findUserById(id)
-
-                // const pontAtualAtt = userAtt.Score.pontAtual
-
-                // const ptotal = pontAtual + pontTotal
-
-                // if (user.Score.AtualizadoEm.getDate() != 15) {
-                //     await usersService.updatepontTotal(id, ptotal)
-                // }
-
-                //console.log(user.Score)
-
             }
         }
         else {
@@ -79,27 +63,14 @@ const confirmgame = async (req, res) => {
             const SeqPlay = []
             await usersService.updateseqPlay(id, SeqPlay)
 
-            //const resp = 0
-
-            //await usersService.updatepontAtual(id, res)
+            DiariaAcum.push(pontProv)
 
             if (pontProv >= 3 && pontProv >= pontAtual) {
                 await usersService.updatepontAtual(id, pontProv)
                 await usersService.updatetempodiario(id, tempo)
+                await usersService.updateDiariaAcum(id, DiariaAcum)
+
             }
-
-            const ptotal = pontAtual + pontTotal
-
-            if (pontAtual == 0) {
-                await usersService.updatepontTotal(id, ptotal)
-            }
-
-            // if (user.Score.AtualizadoEm.getDate() + 6 != tempo.getDate() ||
-            //     user.Score.AtualizadoEm.getMonth() != tempo.getMonth() ||
-            //     user.Score.AtualizadoEm.getFullYear() != tempo.getFullYear()
-            // ){
-            //     await usersService.updatepontTotal(id, ptotal)
-            // }
 
             const prov = 0
             await usersService.updatepontProv(id, prov)

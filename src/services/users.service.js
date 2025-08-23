@@ -6,12 +6,12 @@ const findAllUsers = () => UserMemo.find().sort({ _id: -1 })
 
 const findRankAtual = () => UserMemo.find().sort({
     'Score.ScoreDiario.pontAtual': -1,
-    'Score.DiarioAtualizadoEm': -1
+    'Score.ScoreDiario.DiarioAtualizadoEm': -1
 }).limit(5)
 
 const findRankTotal = () => UserMemo.find().sort({
     'Score.ScoreTotal.pontTotal': -1,
-    'Score.TotalAtualizadoEm': -1
+    'Score.ScoreTotal.TotalAtualizadoEm': -1
 }).limit(5)
 
 const findUserById = (id) => UserMemo.findById(id)
@@ -45,6 +45,9 @@ const updateseqServ = (id, seqServ) =>
 const updateseqPlay = (id, SeqPlay) =>
     UserMemo.findByIdAndUpdate({ _id: id }, { SeqPlay })
 
+const updateDiariaAcum = (id, DiariaAcum) => 
+    UserMemo.findByIdAndUpdate({_id: id}, {$set: {'Score.ScoreDiario.DiariaAcum': DiariaAcum} })
+
 const updatepontProv = (id, pontProv) =>
     UserMemo.findByIdAndUpdate({ _id: id }, { $set: { 'Score.ScoreDiario.pontProv': pontProv } })
 
@@ -65,7 +68,7 @@ const confirmById = (id) => UserMemo.findById(id)
 
 export default {
     createUser, findAllUsers, findUserById, findUserByEmail,
-    updateUserUsername, updateUserSenha, updateseqServ, updateseqPlay, confirmById,
+    updateUserUsername, updateUserSenha, updateseqServ, updateseqPlay, confirmById, updateDiariaAcum,
     updatepontProv, updatepontTotal, updatepontAtual, updatetempodiario, updatetempototal, findRankAtual, findRankTotal,
     updateCoin, updateSenha, updatesenhaTokenReset, updatesenhaTokenExpire, updateToken
 }
