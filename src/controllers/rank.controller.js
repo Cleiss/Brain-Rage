@@ -11,31 +11,34 @@ const rankingAtual = async (req, res) => {
 
         const usersRank = await usersService.findAllUsers()
 
-        const rank = await usersService.findRankAtual()
+        const rank = await usersService.findRankDiario()
 
-        const rankdiario = await rankdiarioService.findAllRanks()
+        const rankdiario = await rankdiarioService.findRankDiarioAnterior()
 
         if (!id || !user) {
             return res.status(401).send('Solicitação não permitida')
         }
 
         const hoje = new Date()
-        const hojedia = hoje.getDate()
-        const hojemes = hoje.getMonth()
-        const hojeano = hoje.getFullYear()
+        const hojedia = hoje.getUTCDate()
+        const hojemes = hoje.getUTCMonth()
+        const hojeano = hoje.getUTCFullYear()
         const pAtual = 0
         const pAcum = []
 
-        if (rankdiario[0].createdAt.getDate() != hojedia ||
-            rankdiario[0].createdAt.getMonth() != hojemes ||
-            rankdiario[0].createdAt.getFullYear() != hojeano) {
+        console.log(hoje.get)
+
+        if (rankdiario[0].createdAt.getUTCDate() != hojedia ||
+            rankdiario[0].createdAt.getUTCMonth() != hojemes ||
+            rankdiario[0].createdAt.getUTCFullYear() != hojeano) {
+
             rankdiarioService.createRank({ Rank: rank })
 
         }
 
         for (let i = 0; i < usersRank.length; i++) {
 
-            if (hojedia != usersRank[i].Score.ScoreDiario.DiarioAtualizadoEm.getDate()) {
+            if (hojedia != usersRank[i].Score.ScoreDiario.DiarioAtualizadoEm.getUTCDate()) {
 
                 await usersService.updatepontAtual(usersRank[i].id, pAtual)
                 await usersService.updatetempodiario(usersRank[i].id, hoje)
@@ -44,7 +47,7 @@ const rankingAtual = async (req, res) => {
             }
         }
 
-        const rankAtt = await usersService.findRankAtual()
+        const rankAtt = await usersService.findRankDiario()
 
         return res.status(201).send(rankAtt)
 
@@ -72,14 +75,14 @@ const rankingTotal = async (req, res) => {
         }
 
         const hoje = new Date()
-        const hojedia = hoje.getDate()
-        const hojemes = hoje.getMonth()
-        const hojeano = hoje.getFullYear()
+        const hojedia = hoje.getUTCDate()
+        const hojemes = hoje.getUTCMonth()
+        const hojeano = hoje.getUTCFullYear()
         const pTotal = 0
 
-        if (rankTotal[0].createdAt.getDate() + 5 == hojedia &&
-            rankTotal[0].createdAt.getMonth() == hojemes &&
-            rankTotal[0].createdAt.getFullYear() == hojeano) {
+        if (rankTotal[0].createdAt.getUTCDate() + 5 == hojedia &&
+            rankTotal[0].createdAt.getUTCMonth() == hojemes &&
+            rankTotal[0].createdAt.getUTCFullYear() == hojeano) {
             ranktotalService.createRankTotal({ Rank: rank })
 
             for (let i = 0; i < usersRank.length; i++) {

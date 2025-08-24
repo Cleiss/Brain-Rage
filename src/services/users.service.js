@@ -4,7 +4,7 @@ const createUser = (body) => UserMemo.create(body)
 
 const findAllUsers = () => UserMemo.find().sort({ _id: -1 })
 
-const findRankAtual = () => UserMemo.find().sort({
+const findRankDiario = () => UserMemo.find().sort({
     'Score.ScoreDiario.pontAtual': -1,
     'Score.ScoreDiario.DiarioAtualizadoEm': -1
 }).limit(5)
@@ -69,6 +69,6 @@ const confirmById = (id) => UserMemo.findById(id)
 export default {
     createUser, findAllUsers, findUserById, findUserByEmail,
     updateUserUsername, updateUserSenha, updateseqServ, updateseqPlay, confirmById, updateDiariaAcum,
-    updatepontProv, updatepontTotal, updatepontAtual, updatetempodiario, updatetempototal, findRankAtual, findRankTotal,
+    updatepontProv, updatepontTotal, updatepontAtual, updatetempodiario, updatetempototal, findRankDiario, findRankTotal,
     updateCoin, updateSenha, updatesenhaTokenReset, updatesenhaTokenExpire, updateToken
 }

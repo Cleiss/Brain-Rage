@@ -7,6 +7,7 @@ import confgame from "../controllers/confirm.controller.js"
 import rankController from "../controllers/rank.controller.js";
 import seqController from "../controllers/seq.controller.js";
 import ultVencController from "../controllers/ultvenc.controller.js";
+import ultVencTotalController from "../controllers/ultvencTotal.controller.js"
 
 const router = route()
 
@@ -15,7 +16,7 @@ router.get("/", usersController.findAllUsers)
 router.get("/ranking", authMidd, validId, validUser, rankController.rankingAtual)
 router.get("/rankingtotal", authMidd, validId, validUser, rankController.rankingTotal)
 router.get("/ultvenc", authMidd, validId, validUser, ultVencController.ultVenc)
-router.get("/ultvencT", authMidd, validId, validUser, ultVencController.ultVencTotal)
+router.get("/ultvencT", authMidd, validId, validUser, ultVencTotalController.ultVencTotal)
 
 
 router.get("/loc", authMidd, validId, validUser, usersController.findUserById)
