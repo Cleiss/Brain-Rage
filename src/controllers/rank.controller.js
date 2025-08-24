@@ -26,8 +26,6 @@ const rankingAtual = async (req, res) => {
         const pAtual = 0
         const pAcum = []
 
-        console.log(hoje.get)
-
         if (rankdiario[0].createdAt.getUTCDate() != hojedia ||
             rankdiario[0].createdAt.getUTCMonth() != hojemes ||
             rankdiario[0].createdAt.getUTCFullYear() != hojeano) {
