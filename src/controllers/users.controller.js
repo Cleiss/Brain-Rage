@@ -7,9 +7,9 @@ import dotenv from "dotenv"
 
 const createUser = async (req, res) => {
     try {
-        const { nome, sobrenome, email, username, senha, pix, moedas } = req.body
+        const { nome, sobrenome, email, username, senha, /*pix,*/ moedas } = req.body
 
-        if (!nome || !sobrenome || !email || !username || !senha || !pix) {
+        if (!nome || !sobrenome || !email || !username || !senha /*|| !pix*/) {
 
             return res.status(400).send({ message: "Preencha todos os campos!" })
         }
@@ -27,7 +27,7 @@ const createUser = async (req, res) => {
 
     }
     catch (err) {
-        return res.status(500).send(err)
+        return res.status(500).send(err.message)
     }
 }
 

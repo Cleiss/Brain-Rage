@@ -12,7 +12,7 @@ const confirmgame = async (req, res) => {
             return res.status(401).send({ message: 'Solicitação não autorizada.' })
         }
 
-        const compCor = 7
+        const compCor = 25
         const venceu = [0]
         const segjogo = [1]
         const perdeu = [2]
@@ -49,7 +49,7 @@ const confirmgame = async (req, res) => {
 
                 let Med_Pont = (Math.round((pont_ord[0] + pont_ord[1] + pont_ord[2]) / 5))
 
-                if (pont_acum.length < 3) {
+                if (pont_acum.length < 10) {
                     Med_Pont = 0
                 }
 
@@ -68,7 +68,7 @@ const confirmgame = async (req, res) => {
                 const prov = pontProv + 1
                 await usersService.updatepontProv(id, prov)
 
-                if (prov <= 7) {
+                if (prov <= 25) {
                     return res.status(201).send(segjogo)
                 }
 
@@ -84,7 +84,7 @@ const confirmgame = async (req, res) => {
 
             DiariaAcum.push(pontProv)
 
-            if (pontProv >= 3 && pontProv >= pontAtual) {
+            if (pontProv >= 10 && pontProv >= pontAtual) {
                 await usersService.updatepontAtual(id, pontProv)
                 await usersService.updateDiariaAcum(id, DiariaAcum)
                 await usersService.updatetempodiario(id, tempo)
@@ -99,7 +99,7 @@ const confirmgame = async (req, res) => {
 
                 let Med_Pont = (Math.round((pont_ord[0] + pont_ord[1] + pont_ord[2]) / 5))
 
-                if (pont_acum.length < 3) {
+                if (pont_acum.length < 10) {
                     Med_Pont = 0
                 }
 
