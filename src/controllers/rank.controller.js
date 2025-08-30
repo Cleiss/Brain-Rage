@@ -78,7 +78,7 @@ const rankingTotal = async (req, res) => {
         const hojeano = hoje.getUTCFullYear()
         const pTotal = 0
 
-        if (rankTotal[0].createdAt.getUTCDate() + 5 == hojedia &&
+        if (rankTotal[0].createdAt.getUTCDate() + 7 == hojedia &&
             rankTotal[0].createdAt.getUTCMonth() == hojemes &&
             rankTotal[0].createdAt.getUTCFullYear() == hojeano) {
             ranktotalService.createRankTotal({ Rank: rank })
